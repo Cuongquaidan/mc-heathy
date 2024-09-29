@@ -10,3 +10,19 @@ export async function getAllDoctors(req, res) {
         return res.status(404).send({ error: "Cannot Find Doctors Data" });
     }
 }
+export async function AddDoctor(req, res) {
+    await connect();
+    try {
+        const { name, avatar, dob, speciality } = req.body;
+        console.log(name, avatar, dob, speciality);
+        const newDoctor = new DoctorModel({ name, avatar, dob, speciality });
+        await newDoctor.save();
+        res.status(201).json({
+            message: "Doctor added successfully",
+            doctor: newDoctor,
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ error: "Error adding doctor" });
+    }
+}

@@ -4,6 +4,7 @@ import morgan from "morgan";
 import connect from "./database/conn.js";
 import router from "./router/route.js";
 const app = express();
+app.use(express.json());
 app.use(cors());
 const port = 8080;
 
