@@ -9,7 +9,7 @@ function NumberOfDoctors() {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/doctors/getAll`
+                    `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAll`
                 );
                 if (!response.ok) {
                     throw new Error("Network response was not ok");

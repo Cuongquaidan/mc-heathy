@@ -9,7 +9,7 @@ function DoctorsList() {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/doctors/getAll`
+                    `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAll`
                 );
                 if (!response.ok) throw new Error("Fetch data failed");
                 console.log(response);
@@ -23,7 +23,7 @@ function DoctorsList() {
         fetchData();
     }, []);
     return (
-        <div className="flex flex-wrap gap-20 p-10">
+        <div className="flex flex-wrap gap-10 p-10">
             {list.map((item) => (
                 <DoctorItem item={item} key={item._id}></DoctorItem>
             ))}
