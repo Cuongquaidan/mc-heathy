@@ -1,13 +1,6 @@
 "use client";
+import { Doctor } from "@/lib/interface";
 import React, { useEffect, useState } from "react";
-
-interface Doctor {
-    _id: string;
-    name: string;
-    avatar: string;
-    dob: Date;
-    speciality: string;
-}
 
 function NumberOfDoctors() {
     const [list, setList] = useState<Doctor[]>([]);

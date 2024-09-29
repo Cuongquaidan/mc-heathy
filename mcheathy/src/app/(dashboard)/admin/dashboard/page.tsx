@@ -1,4 +1,4 @@
-import NumberOfDoctors from "@/components/numberOfDoctors";
+import NumberOfDoctors from "@/components/doctor/numberOfDoctors";
 import React from "react";
 
 function AdminPage() {
