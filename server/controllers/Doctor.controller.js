@@ -13,9 +13,7 @@ export async function getAllDoctors(req, res) {
 export async function AddDoctor(req, res) {
     await connect();
     try {
-        const { name, avatar, dob, speciality } = req.body;
-        console.log(name, avatar, dob, speciality);
-        const newDoctor = new DoctorModel({ name, avatar, dob, speciality });
+        const newDoctor = new DoctorModel({ ...req.body });
         await newDoctor.save();
         res.status(201).json({
             message: "Doctor added successfully",

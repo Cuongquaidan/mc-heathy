@@ -1,7 +1,11 @@
 export interface Doctor {
-    _id: string;
-    name: string;
+    dob: string;
+    address: string;
     avatar: string;
-    dob: Date;
+    email: string;
+    fees: number;
+    name: string;
+    password: string;
+    phone: string;
     speciality: string;
 }

@@ -36,6 +36,20 @@ function AddDoctor() {
             message: "Invalid date format",
         }),
         speciality: z.string(),
+        email: z.string().email({ message: "Must be a valid email" }),
+        password: z.string().min(6).max(10),
+        phone: z
+            .string()
+            .regex(
+                /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
+                {
+                    message: "Phone number is invalid",
+                }
+            ),
+        address: z.string().min(1, { message: "Address is required" }),
+        fees: z.coerce
+            .number()
+            .min(0, { message: "Fees must be a positive number" }),
     });
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -45,19 +59,33 @@ function AddDoctor() {
             avatar: "",
             dob: new Date().toISOString(),
             speciality: "",
+            email: "",
+            password: "",
+            phone: "",
+            address: "",
+            fees: 0,
         },
     });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        // Convert dob from string to Date
-        const dateOfBirth = new Date(values.dob);
-        const formValues = { ...values, dob: dateOfBirth, avatar: file };
+        const formValues = {
+            ...values,
+            dob: new Date(values.dob),
+            avatar: file,
+            fees: parseFloat(values.fees.toString()),
+        };
+
         console.log(formValues);
         if (
             formValues.name &&
             formValues.avatar &&
             formValues.dob &&
-            formValues.speciality
+            formValues.speciality &&
+            formValues.email &&
+            formValues.password &&
+            formValues.phone &&
+            formValues.address &&
+            formValues.fees
         ) {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/doctors/addDoctor`,
@@ -179,13 +207,96 @@ function AddDoctor() {
                             <FormItem style={{ width: "100%" }}>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Your name" {...field} />
+                                    <Input
+                                        placeholder="Doctor name"
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem style={{ width: "100%" }}>
+                                <FormLabel>Doctor email</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="Doctor email"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem style={{ width: "100%" }}>
+                                <FormLabel>Doctor password</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        type="password"
+                                        placeholder="Doctor password"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                            <FormItem style={{ width: "100%" }}>
+                                <FormLabel>Doctor phone</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="Doctor phone"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="address"
+                        render={({ field }) => (
+                            <FormItem style={{ width: "100%" }}>
+                                <FormLabel>Doctor address</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="Doctor address"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="fees"
+                        render={({ field }) => (
+                            <FormItem style={{ width: "100%" }}>
+                                <FormLabel>Doctor fees</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        placeholder="Doctor fees"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <FormField
                         control={form.control}
                         name="dob"
