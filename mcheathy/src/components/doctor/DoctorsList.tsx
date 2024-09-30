@@ -24,8 +24,8 @@ function DoctorsList() {
     }, []);
     return (
         <div className="flex flex-wrap gap-10 p-10">
-            {list.map((item) => (
-                <DoctorItem item={item} key={item._id}></DoctorItem>
+            {list.map((item, index) => (
+                <DoctorItem item={item} key={index}></DoctorItem>
             ))}
         </div>
     );
