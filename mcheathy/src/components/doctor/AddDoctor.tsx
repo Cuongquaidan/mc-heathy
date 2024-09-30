@@ -141,7 +141,7 @@ function AddDoctor() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8 w-[500px] items-center flex flex-col"
+                    className="space-y-8 w-[full] items-center flex flex-col"
                 >
                     <FormField
                         control={form.control}
@@ -200,159 +200,161 @@ function AddDoctor() {
                         )}
                     />
 
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem style={{ width: "100%" }}>
-                                <FormLabel>Name</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Doctor name"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem style={{ width: "100%" }}>
-                                <FormLabel>Doctor email</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Doctor email"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem style={{ width: "100%" }}>
-                                <FormLabel>Doctor password</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="password"
-                                        placeholder="Doctor password"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                            <FormItem style={{ width: "100%" }}>
-                                <FormLabel>Doctor phone</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Doctor phone"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="address"
-                        render={({ field }) => (
-                            <FormItem style={{ width: "100%" }}>
-                                <FormLabel>Doctor address</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Doctor address"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="fees"
-                        render={({ field }) => (
-                            <FormItem style={{ width: "100%" }}>
-                                <FormLabel>Doctor fees</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Doctor fees"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="dob"
-                        render={({ field }) => (
-                            <FormItem style={{ width: "100%" }}>
-                                <FormLabel>DOB</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Your birthday"
-                                        type="date"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                    <div className="grid w-full grid-cols-2 gap-10 p-20 ">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem style={{ width: "100%" }}>
+                                    <FormLabel>Name</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Doctor name"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem style={{ width: "100%" }}>
+                                    <FormLabel>Doctor email</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Doctor email"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem style={{ width: "100%" }}>
+                                    <FormLabel>Doctor password</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="password"
+                                            placeholder="Doctor password"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                                <FormItem style={{ width: "100%" }}>
+                                    <FormLabel>Doctor phone</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Doctor phone"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="address"
+                            render={({ field }) => (
+                                <FormItem style={{ width: "100%" }}>
+                                    <FormLabel>Doctor address</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Doctor address"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="fees"
+                            render={({ field }) => (
+                                <FormItem style={{ width: "100%" }}>
+                                    <FormLabel>Doctor fees</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Doctor fees"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="dob"
+                            render={({ field }) => (
+                                <FormItem style={{ width: "100%" }}>
+                                    <FormLabel>DOB</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Your birthday"
+                                            type="date"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                    <FormField
-                        control={form.control}
-                        name="speciality"
-                        render={({ field }) => (
-                            <FormItem style={{ width: "100%" }}>
-                                <FormLabel>Speciality</FormLabel>
-                                <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue=""
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder="Select speciality" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="Dermatologist">
-                                            Dermatologist
-                                        </SelectItem>
-                                        <SelectItem value="Pediatricians">
-                                            Pediatricians
-                                        </SelectItem>
-                                        <SelectItem value="Neurologist">
-                                            Neurologist
-                                        </SelectItem>
-                                        <SelectItem value="Gastroenterologist">
-                                            Gastroenterologist
-                                        </SelectItem>
-                                        <SelectItem value="Gynecologist">
-                                            Gynecologist
-                                        </SelectItem>
-                                        <SelectItem value="General physician">
-                                            General physician
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                        <FormField
+                            control={form.control}
+                            name="speciality"
+                            render={({ field }) => (
+                                <FormItem style={{ width: "100%" }}>
+                                    <FormLabel>Speciality</FormLabel>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue=""
+                                    >
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select speciality" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="Dermatologist">
+                                                Dermatologist
+                                            </SelectItem>
+                                            <SelectItem value="Pediatricians">
+                                                Pediatricians
+                                            </SelectItem>
+                                            <SelectItem value="Neurologist">
+                                                Neurologist
+                                            </SelectItem>
+                                            <SelectItem value="Gastroenterologist">
+                                                Gastroenterologist
+                                            </SelectItem>
+                                            <SelectItem value="Gynecologist">
+                                                Gynecologist
+                                            </SelectItem>
+                                            <SelectItem value="General physician">
+                                                General physician
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
 
                     <Button
                         style={{

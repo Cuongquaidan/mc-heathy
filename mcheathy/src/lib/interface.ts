@@ -9,3 +9,7 @@ export interface Doctor {
     phone: string;
     speciality: string;
 }
+
+export interface Speciality {
+    name: string;
+}
