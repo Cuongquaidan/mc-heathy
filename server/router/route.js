@@ -8,6 +8,9 @@ const router = Router();
 // doctor
 router.route("/doctors/getAll").get(doctorControllers.getAllDoctors);
 router.route("/doctors/addDoctor").post(doctorControllers.AddDoctor);
+router
+    .route("/doctors/getAvailableDoctorsByDate")
+    .get(doctorControllers.getAvailableDoctorsByDate);
 
 // speciality
 

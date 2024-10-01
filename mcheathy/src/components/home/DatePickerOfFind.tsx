@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Calendar } from "../ui/calendar";
 import {
     Popover,
@@ -8,8 +8,22 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import DoctorItem from "../doctor/DoctorItem";
+import { Doctor } from "@/lib/interface";
 function DatePickerOfFind() {
     const [date, setDate] = useState<Date | undefined>(new Date());
+    const [list, setList] = useState<Doctor[]>([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAvailableDoctorsByDate?date=${date}`
+            );
+            if (!response) throw new Error("Fetch data failed");
+
+            const data: Doctor[] = await response.json();
+            setList(data);
+        };
+        fetchData();
+    }, [date]);
     return (
         <div>
             <Popover>
@@ -26,21 +40,12 @@ function DatePickerOfFind() {
                 </PopoverContent>
             </Popover>
             <div className="grid grid-cols-3 gap-10 p-10">
-                {new Array(6).fill(0).map((item, index) => (
+                {list.map((item, index) => (
                     <DoctorItem
-                        item={{
-                            dob: "",
-                            address: "",
-                            avatar: "",
-                            email: "",
-                            fees: 0,
-                            name: "",
-                            password: "",
-                            phone: "",
-                            speciality: "",
-                        }}
+                        item={item}
                         width="100px"
                         height="125px"
+                        isFlex={true}
                         key={index}
                     ></DoctorItem>
                 ))}
