@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import Banner from "@/components/Banner";
+import FindBySpeciality from "@/components/home/FindBySpeciality";
 export const metadata: Metadata = {
     title: "Home",
     description:
@@ -8,8 +9,9 @@ export const metadata: Metadata = {
 };
 function Home() {
     return (
-        <div>
+        <div className="w-[1400px] max-w-[100%] mx-auto">
             <Banner></Banner>
+            <FindBySpeciality></FindBySpeciality>
         </div>
     );
 }

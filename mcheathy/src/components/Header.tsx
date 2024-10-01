@@ -13,7 +13,7 @@ function Header() {
         <div className="max-w-[100%] p-10 flex justify-between items-center">
             <Link
                 href={"/home"}
-                className="p-5 text-2xl italic font-bold tracking-widest rounded-lg text-textBlue bg-lightBlue dark:text-white dark:bg-black dark:border-slate-500 dark:border"
+                className="p-5 text-2xl italic font-bold tracking-widest rounded-lg text-textBlue bg-lightBlue dark:text-darkTextPrimary dark:bg-darkBackground dark:border-slate-500 dark:border"
             >
                 MCHeathy
             </Link>

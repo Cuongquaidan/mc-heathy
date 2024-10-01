@@ -15,11 +15,20 @@ const config: Config = {
                 primaryGray: "#595f69",
                 lightBlue: "#eaf4fe",
                 textBlue: "#1590ff",
+                darkBackground: "#09090b",
+                darkTextSecondary: "#7d7c81",
+                darkTextPrimary: "#fafafa",
             },
             borderRadius: {
                 lg: "var(--radius)",
                 md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
+            },
+            backgroundImage: {
+                "light-gradient":
+                    "linear-gradient(180deg, #AFC1DC 0%, #E2E5ED 100%)",
+                "dark-gradient":
+                    "linear-gradient(180deg, #09090b 0%, #09090b 100%)",
             },
         },
     },
