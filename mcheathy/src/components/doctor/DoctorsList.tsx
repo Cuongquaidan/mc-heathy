@@ -25,7 +25,12 @@ function DoctorsList() {
     return (
         <div className="flex flex-wrap gap-10 p-10">
             {list.map((item, index) => (
-                <DoctorItem item={item} key={index}></DoctorItem>
+                <DoctorItem
+                    width="200px"
+                    height="250px"
+                    item={item}
+                    key={index}
+                ></DoctorItem>
             ))}
         </div>
     );

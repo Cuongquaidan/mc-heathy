@@ -2,11 +2,20 @@ import { Doctor } from "@/lib/interface";
 import Image from "next/image";
 import React from "react";
 
-function DoctorItem({ item, ...props }: { item: Doctor }) {
+function DoctorItem({
+    item,
+    width,
+    height,
+    ...props
+}: {
+    item: Doctor;
+    width: string;
+    height: string;
+}) {
     return (
         <div
             {...props}
-            className="p-8 border rounded-xl border-textBlue bg-lightBlue"
+            className="p-8 border rounded-xl border-textBlue bg-lightBlue dark:border-primaryGray"
         >
             <Image
                 src={item.avatar}
@@ -14,7 +23,7 @@ function DoctorItem({ item, ...props }: { item: Doctor }) {
                 width={200}
                 height={300}
                 objectFit="cover"
-                style={{ borderRadius: "8px", width: "200px", height: "250px" }}
+                style={{ borderRadius: "8px", width: width, height: height }}
             />
             <p className="mt-5 text-xl font-bold break-words w-[200px] text-wrap">
                 {item.name}

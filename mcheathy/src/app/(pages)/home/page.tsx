@@ -2,6 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import Banner from "@/components/Banner";
 import FindBySpeciality from "@/components/home/FindBySpeciality";
+import FindByDate from "@/components/home/FindByDate";
 export const metadata: Metadata = {
     title: "Home",
     description:
@@ -12,6 +13,7 @@ function Home() {
         <div className="w-[1400px] max-w-[100%] mx-auto">
             <Banner></Banner>
             <FindBySpeciality></FindBySpeciality>
+            <FindByDate></FindByDate>
         </div>
     );
 }
