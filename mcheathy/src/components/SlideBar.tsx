@@ -3,8 +3,7 @@ import SliderBarItem from "./SliderBarItem";
 import Home from "./icons/HomeIcon";
 import PersonGroup from "./icons/PersonGroup";
 import AddPerson from "./icons/AddPerson";
-
-// Định nghĩa interface cho item của menu
+import { MdEditCalendar } from "react-icons/md";
 interface MenuItem {
     name: string;
     url: string;
@@ -27,6 +26,11 @@ function SlideBar() {
             name: "Add doctor",
             url: "/admin/add-doctor",
             icon: <AddPerson />,
+        },
+        {
+            name: "Appointments",
+            url: "/admin/appointments",
+            icon: <MdEditCalendar />,
         },
     ];
 
