@@ -81,13 +81,13 @@ function LoginPage() {
                 />
                 <Button
                     type="submit"
-                    className="text-xl font-bold bg-lightBlue text-textBlue"
+                    className="text-xl font-bold bg-lightBlue text-textBlue hover:bg-blue-200"
                 >
                     Submit
                 </Button>
                 <div className="flex gap-2">
-                    <p>You haven't account? </p>
-                    <Link href={"/register"} className="text-textBlue">
+                    <p>You haven't an account? </p>
+                    <Link href={"/register"} className="text-textBlue ">
                         Register here
                     </Link>
                 </div>

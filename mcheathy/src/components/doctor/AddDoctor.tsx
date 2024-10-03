@@ -37,7 +37,7 @@ function AddDoctor() {
         }),
         speciality: z.string(),
         email: z.string().email({ message: "Must be a valid email" }),
-        password: z.string().min(6).max(10),
+        password: z.string().min(6),
         phone: z
             .string()
             .regex(
