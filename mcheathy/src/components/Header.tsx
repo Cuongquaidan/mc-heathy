@@ -5,12 +5,24 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 function Header() {
     const pathName = usePathname();
     const { setTheme } = useTheme();
+    const user = {
+        avatar: "",
+        name: "Admin",
+    };
     return (
-        <div className="max-w-[100%] p-10 flex justify-between items-center">
+        <div className="max-w-[100%] p-10 flex justify-between items-center px-36">
             <Link
                 href={"/home"}
                 className="p-5 text-2xl italic font-bold tracking-widest rounded-lg text-textBlue bg-lightBlue dark:text-darkTextPrimary dark:bg-darkBackground dark:border-slate-500 dark:border"
@@ -60,12 +72,35 @@ function Header() {
                 </Link>
             </div>
             <div className="flex items-center gap-4">
-                <Button
-                    variant="outline"
-                    className="p-6 font-bold text-white bg-textBlue"
-                >
-                    Create account
-                </Button>
+                {user ? (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Avatar className="select-none">
+                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56">
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+
+                            <DropdownMenuItem>My Profile</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+
+                            <DropdownMenuItem>My Appointments</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+
+                            <DropdownMenuItem>Log out</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                ) : (
+                    <Button
+                        variant="outline"
+                        className="p-6 font-bold text-white bg-textBlue"
+                    >
+                        Create account
+                    </Button>
+                )}
 
                 <div className="flex">
                     <SunIcon
