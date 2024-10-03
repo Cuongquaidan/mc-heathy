@@ -17,8 +17,8 @@ function DoctorItem({
     return (
         <div
             {...props}
-            className={`p-8 border rounded-xl border-textBlue bg-lightBlue dark:border-primaryGray ${
-                isFlex ? "flex gap-8" : ""
+            className={`p-8 border rounded-xl border-textBlue bg-lightBlue dark:border-primaryGray dark:bg-darkBackground items-center ${
+                isFlex ? "flex gap-8 items-start" : ""
             }`}
         >
             <Image
@@ -30,7 +30,7 @@ function DoctorItem({
                 style={{ borderRadius: "8px", width: width, height: height }}
             />
             <div>
-                <p className="mt-5 text-xl font-bold break-words w-[200px] text-wrap">
+                <p className="mt-5 text-xl font-bold break-words max-w-[150px] text-wrap">
                     {item.name}
                 </p>
                 <p className="text-primaryGray">{item.speciality}</p>

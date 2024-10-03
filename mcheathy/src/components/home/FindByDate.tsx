@@ -3,7 +3,7 @@ import DatePickerOfFind from "./DatePickerOfFind";
 
 function FindByDate() {
     return (
-        <div className="flex flex-col items-center mx-auto mt-20">
+        <div className="flex flex-col items-center mx-auto mt-40">
             <p className="text-2xl font-bold ">
                 Find available doctors by date
             </p>

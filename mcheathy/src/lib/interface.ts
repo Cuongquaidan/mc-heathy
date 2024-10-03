@@ -14,6 +14,7 @@ export interface Doctor {
 
 export interface Speciality {
     name: string;
+    slug: string;
 }
 
 export interface Appointment {

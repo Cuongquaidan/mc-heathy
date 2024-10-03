@@ -1,30 +1,16 @@
 "use client";
 import { Doctor } from "@/lib/interface";
-import React, { useEffect, useState } from "react";
 import DoctorItem from "./DoctorItem";
+import useFetchData from "@/hooks/useFetchData";
 
 function DoctorsList() {
-    const [list, setList] = useState<Doctor[]>([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAll`
-                );
-                if (!response.ok) throw new Error("Fetch data failed");
-                console.log(response);
-                const data: Doctor[] = await response.json();
-                console.log(data);
-                setList(data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchData();
-    }, []);
+    const { data: doctors, error } = useFetchData<Doctor[]>(
+        `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAll`
+    );
+    if (error) return <div>{error}</div>;
     return (
         <div className="flex flex-wrap gap-10 p-10">
-            {list.map((item, index) => (
+            {doctors?.map((item, index) => (
                 <DoctorItem
                     isFlex={false}
                     width="200px"

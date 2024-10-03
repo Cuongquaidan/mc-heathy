@@ -11,7 +11,9 @@ router.route("/doctors/addDoctor").post(doctorControllers.AddDoctor);
 router
     .route("/doctors/getAvailableDoctorsByDate")
     .get(doctorControllers.getAvailableDoctorsByDate);
-
+router
+    .route("/doctors/getDoctorsBySpeciality")
+    .get(doctorControllers.getDoctorsBySpeciality);
 // speciality
 
 router
@@ -20,4 +22,5 @@ router
 
 // appointment
 router.route("/appointments/getAll").get(appointmentControllers.getAll);
+
 export default router;

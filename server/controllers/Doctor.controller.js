@@ -67,3 +67,22 @@ export async function getAvailableDoctorsByDate(req, res) {
             .send({ error: "Cannot Find Available Doctors Data" });
     }
 }
+export async function getDoctorsBySpeciality(req, res) {
+    await connect();
+    try {
+        const speciality = req.query.speciality;
+        const query = speciality ? { speciality } : {};
+
+        const doctors = await DoctorModel.find(query).lean();
+
+        const filteredDoctors = doctors.map(
+            ({ password, ...doctor }) => doctor
+        );
+
+        return res.status(200).json(filteredDoctors);
+    } catch (error) {
+        return res
+            .status(404)
+            .send({ error: "Cannot find doctors by speciality" });
+    }
+}

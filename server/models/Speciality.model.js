@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const SpecialitySchema = new Schema({
     name: { type: String, required: true },
+    slug: { type: String, required: true },
 });
 
 const SpecialityModel =

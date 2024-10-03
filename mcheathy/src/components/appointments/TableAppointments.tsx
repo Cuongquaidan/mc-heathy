@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import {
     Table,
     TableBody,
@@ -8,28 +7,15 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Appointment } from "@/lib/interface";
 import { MdOutlineCancel } from "react-icons/md";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useFetchData from "@/hooks/useFetchData";
+import { Appointment } from "@/lib/interface";
 function TableAppointments() {
-    const [list, setList] = useState<Appointment[]>([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/appointments/getAll`
-                );
-                if (!response) {
-                    throw new Error("Fetch data failed");
-                }
-                const data: Appointment[] = await response.json();
-                setList(data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchData();
-    }, []);
+    const { data: appointments, error } = useFetchData<Appointment[]>(
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments/getAll`
+    );
+    if (error) return <div>{error}</div>;
     return (
         <div className="p-10">
             <Table>
@@ -46,7 +32,7 @@ function TableAppointments() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {list.map((item, index) => (
+                    {appointments?.map((item, index) => (
                         <TableRow key={index}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell className="flex items-center gap-4">

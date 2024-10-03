@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 function Home() {
     return (
-        <div className="w-[1400px] max-w-[100%] mx-auto">
+        <div className="w-[1400px] max-w-[100%] mx-auto pb-44">
             <Banner></Banner>
             <FindBySpeciality></FindBySpeciality>
             <FindByDate></FindByDate>
