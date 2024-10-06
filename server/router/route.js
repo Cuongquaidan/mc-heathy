@@ -7,6 +7,7 @@ import * as appointmentControllers from "../controllers/Appointment.controller.j
 const router = Router();
 // doctor
 router.route("/doctors/getAll").get(doctorControllers.getAllDoctors);
+router.route("/doctors/getDoctorById").get(doctorControllers.getDoctorById);
 router.route("/doctors/addDoctor").post(doctorControllers.AddDoctor);
 router
     .route("/doctors/getAvailableDoctorsByDate")
@@ -23,6 +24,10 @@ router
 // appointment
 router.route("/appointments/getAll").get(appointmentControllers.getAll);
 router
-    .route("/appointment/getByDoctorId")
+    .route("/appointments/getByDoctorId")
     .get(appointmentControllers.getAppointmentByDoctorId);
+
+router
+    .route("/appointments/addAppointment")
+    .post(appointmentControllers.addAppointment);
 export default router;

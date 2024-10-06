@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 
 export interface Doctor {
+    _id: Types.ObjectId;
     dob: string;
     address: string;
     avatar: string;

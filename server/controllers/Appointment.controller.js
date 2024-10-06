@@ -26,3 +26,17 @@ export async function getAppointmentByDoctorId(req, res) {
         return res.status(404).send({ error: "Cannot Find Appointments Data" });
     }
 }
+
+export async function addAppointment(req, res) {
+    await connect();
+    try {
+        const newAppointment = new AppointmentModel({ ...req.body });
+        await newAppointment.save();
+        return res.status(200).json({
+            message: "Add appointment successfully",
+            newAppointment,
+        });
+    } catch (error) {
+        return res.status(500).send({ error: "Error adding appointment" });
+    }
+}

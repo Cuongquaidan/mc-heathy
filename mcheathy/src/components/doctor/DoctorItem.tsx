@@ -2,6 +2,7 @@ import { Doctor } from "@/lib/interface";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 function DoctorItem({
     item,
@@ -14,6 +15,7 @@ function DoctorItem({
     width: string;
     height: string;
     isFlex: boolean;
+    dateTime: Date;
 }) {
     return (
         <div
@@ -36,7 +38,9 @@ function DoctorItem({
                 </p>
                 <p className="text-primaryGray">{item.speciality}</p>
             </div>
-            <Button className=" bg-textBlue">Book</Button>
+            <Button className=" bg-textBlue">
+                <Link href={`book-appointment?doctorId=${item._id}`}>Book</Link>
+            </Button>
         </div>
     );
 }

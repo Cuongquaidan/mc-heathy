@@ -14,6 +14,21 @@ export async function getAllDoctors(req, res) {
         return res.status(404).send({ error: "Cannot Find Doctors Data" });
     }
 }
+export async function getDoctorById(req, res) {
+    await connect();
+    try {
+        const doctorId = req.query.doctorId;
+        const doctor = await DoctorModel.findById(doctorId).lean();
+        if (!doctor) {
+            return res.status(404).send({ error: "Doctor not found" });
+        }
+        const { password, ...doctorNoPass } = doctor;
+        return res.status(200).json(doctorNoPass);
+    } catch (error) {
+        console.error("Error fetching doctor data:", error);
+        return res.status(404).send({ error: "Cannot Find Doctor Data" });
+    }
+}
 export async function AddDoctor(req, res) {
     await connect();
     try {

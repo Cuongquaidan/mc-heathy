@@ -51,3 +51,6 @@ h5 {
     border-bottom: 1px solid #ccc;
     font-weight: 700;
 }
+.dark .react-calendar {
+    background-color: black;
+}

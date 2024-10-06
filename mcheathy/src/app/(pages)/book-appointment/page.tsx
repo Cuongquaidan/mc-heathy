@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 function BookAppointmentPage() {
     return (
         <div className="w-[1400px] max-w-screen mx-auto py-28">
-            <CalendarBook doctorId="66f8921ee78fe6c36f346cd3"></CalendarBook>
+            <CalendarBook></CalendarBook>
         </div>
     );
 }
