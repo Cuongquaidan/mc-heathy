@@ -6,6 +6,7 @@ function NumberOfDoctors() {
     const { data: doctors, error } = useFetchData<Doctor[]>(
         `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAll`
     );
+    console.log(doctors);
     if (error) return <div>{error}</div>;
     return (
         <div className="flex items-center justify-between gap-5 px-10 py-4 text-4xl font-bold border border-teal-500">

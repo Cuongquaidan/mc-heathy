@@ -22,5 +22,7 @@ router
 
 // appointment
 router.route("/appointments/getAll").get(appointmentControllers.getAll);
-
+router
+    .route("/appointment/getByDoctorId")
+    .get(appointmentControllers.getAppointmentByDoctorId);
 export default router;

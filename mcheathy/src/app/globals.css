@@ -28,3 +28,26 @@ h4,
 h5 {
     user-select: none;
 }
+.react-calendar__tile {
+    border: 1px solid #ccc !important;
+    padding: 10px;
+}
+.react-calendar__tile--active {
+    background-color: #00a02b !important;
+    color: white !important;
+}
+.unavailable-day {
+    background-color: red !important;
+    color: white !important;
+    pointer-events: none;
+    opacity: 0.75;
+}
+.react-calendar {
+    width: 950px !important;
+    height: 350px !important;
+}
+.react-calendar__navigation {
+    font-size: 20px;
+    border-bottom: 1px solid #ccc;
+    font-weight: 700;
+}

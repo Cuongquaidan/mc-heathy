@@ -121,6 +121,8 @@ function RegisterPage() {
                                                 width: "200px",
                                                 height: "200px",
                                                 cursor: "pointer",
+                                                borderWidth: 4,
+                                                borderColor: "lightblue",
                                             }}
                                         />
                                     ) : (
