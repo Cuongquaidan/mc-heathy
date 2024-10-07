@@ -23,5 +23,5 @@ connect()
         }
     })
     .catch((error) => {
-        console.log("Invalid connection");
+        console.log(error);
     });

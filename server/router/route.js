@@ -30,4 +30,5 @@ router
 router
     .route("/appointments/addAppointment")
     .post(appointmentControllers.addAppointment);
+router.delete("/appointments/:id", appointmentControllers.deleteAppointment);
 export default router;

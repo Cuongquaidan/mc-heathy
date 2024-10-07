@@ -1,3 +1,4 @@
+import { error } from "console";
 import connect from "../database/conn.js";
 import AppointmentModel from "../models/Appointment.model.js";
 
@@ -38,5 +39,23 @@ export async function addAppointment(req, res) {
         });
     } catch (error) {
         return res.status(500).send({ error: "Error adding appointment" });
+    }
+}
+
+export async function deleteAppointment(req, res) {
+    await connect();
+    try {
+        const appointment_id = req.params.id;
+        const deletedAppointment = await AppointmentModel.findByIdAndDelete(
+            appointment_id
+        );
+        if (!deletedAppointment)
+            return res.status(404).send({ error: "Appointment not found" });
+        return res.status(200).json({
+            message: "Appointment deleted successfully",
+            deletedAppointment,
+        });
+    } catch (error) {
+        return res.status(500).send({ error: "Error deleting appointment" });
     }
 }

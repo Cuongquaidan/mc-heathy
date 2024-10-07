@@ -29,4 +29,5 @@ export interface Appointment {
     doctorAvatar: string;
     userAvatar: string; // Thêm trường userAvatar
     fees: string;
+    _id: string;
 }
