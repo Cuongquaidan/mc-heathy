@@ -70,7 +70,7 @@ function AddDoctor() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const formValues = {
             ...values,
-            dob: new Date(values.dob),
+            dob: new Date(values.dob).toISOString(),
             avatar: file,
             fees: parseFloat(values.fees.toString()),
         };
