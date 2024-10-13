@@ -22,10 +22,18 @@ import { useState } from "react";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
+import { useUnresgisterStore } from "@/store/store";
+import { useRouter } from "next/navigation";
 function RegisterPage() {
     const [file, setFile] = useState<string>();
-
+    const router = useRouter();
+    const updateName = useUnresgisterStore((state) => state.updateName);
+    const updateEmail = useUnresgisterStore((state) => state.updateEmail);
+    const updatePassword = useUnresgisterStore((state) => state.updatePassword);
+    const updateAvatar = useUnresgisterStore((state) => state.updateAvatar);
+    const updateGender = useUnresgisterStore((state) => state.updateGender);
+    const updatePhone = useUnresgisterStore((state) => state.updatePhone);
+    const updateDob = useUnresgisterStore((state) => state.updateDob);
     const formSchema = z.object({
         name: z.string().min(2).max(50),
         email: z.string().email({ message: "Must be a valid email" }),
@@ -81,7 +89,14 @@ function RegisterPage() {
             formValues.gender
         ) {
             console.log(formValues);
-            toast.success("Submit successful!", { autoClose: 2000 });
+            updateAvatar(formValues.avatar);
+            updateName(formValues.name);
+            updateEmail(formValues.email);
+            updatePassword(formValues.password);
+            updateDob(formValues.dob);
+            updatePhone(formValues.phone);
+            updateGender(formValues.gender);
+            router.push("/register/otp");
         } else {
             toast.error("Please fill out the form correctly!", {
                 autoClose: 2000,

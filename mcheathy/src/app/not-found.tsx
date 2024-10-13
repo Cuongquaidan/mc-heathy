@@ -3,7 +3,12 @@ import NotFoundImage from "@/public/assets/images/notfound.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+    title: "Not found",
+    description:
+        "McHeathy is a comprehensive healthcare platform designed to offer fast, safe, and reliable health protection services. Our mission is to prioritize your well-being by providing easy access to healthcare professionals and services. With McHeathy, you can quickly book appointments with qualified doctors, schedule health consultations, and manage your medical needs with ease.Our platform is built to ensure the highest level of safety and privacy for users, enabling you to find the right care at the right time. Whether you're seeking preventative care, specialist consultations, or regular check-ups, McHeathy is here to make your healthcare experience seamless, secure, and efficient ",
+};
 function NotFoundPage() {
     return (
         <div className="w-full min-h-screen bg-darkBackground">
