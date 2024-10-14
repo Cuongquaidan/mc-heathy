@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Must be a valid email" }),
@@ -28,17 +28,46 @@ const formSchema = z.object({
 function LoginPage() {
     const searchParams = useSearchParams();
     const message = searchParams.get("message");
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "example@gmail.com",
+            email: "",
             password: "",
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(values),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            const data = await response.json();
+            console.log("Response data:", data);
+
+            if (data.message === "Login Successful...!") {
+                router.push("/home");
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+            toast.error("Login failed. Please try again.", {
+                autoClose: 2000,
+            });
+        }
     }
+
     useEffect(() => {
         if (message) {
             toast.success(message, {
@@ -46,6 +75,7 @@ function LoginPage() {
             });
         }
     }, [message]);
+
     return (
         <div>
             <ToastContainer />
@@ -58,7 +88,7 @@ function LoginPage() {
                         <h2 className="py-2 text-3xl font-bold text-textBlue">
                             Login
                         </h2>
-                        <p>Please login to book appointment</p>
+                        <p>Please login to book an appointment</p>
                     </div>
                     <FormField
                         control={form.control}
@@ -72,7 +102,6 @@ function LoginPage() {
                                         {...field}
                                     />
                                 </FormControl>
-
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -90,7 +119,6 @@ function LoginPage() {
                                         {...field}
                                     />
                                 </FormControl>
-
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -112,4 +140,5 @@ function LoginPage() {
         </div>
     );
 }
+
 export default LoginPage;

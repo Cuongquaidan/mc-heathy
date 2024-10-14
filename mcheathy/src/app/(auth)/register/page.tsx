@@ -70,6 +70,11 @@ function RegisterPage() {
         defaultValues: {
             gender: "Male",
             avatar: "",
+            name: "",
+            email: "",
+            password: "",
+            phone: "",
+            dob: "",
         },
     });
 

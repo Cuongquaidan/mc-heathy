@@ -63,12 +63,7 @@ export async function login(req, res) {
             .then((user) => {
                 bcrypt
                     .compare(password, user.password)
-                    .then((passwordCheck) => {
-                        if (!passwordCheck)
-                            return res
-                                .status(400)
-                                .send({ error: "Don't have Password" });
-
+                    .then(() => {
                         // create jwt token
                         // const token = jwt.sign(
                         //     {
@@ -80,19 +75,19 @@ export async function login(req, res) {
                         // );
 
                         return res.status(200).send({
-                            msg: "Login Successful...!",
+                            message: "Login Successful...!",
                             email: user.email,
-                            token,
+                            // token,
                         });
                     })
                     .catch((error) => {
                         return res
                             .status(400)
-                            .send({ error: "Password does not Match" });
+                            .send({ error: "Password does not match" });
                     });
             })
             .catch((error) => {
-                return res.status(404).send({ error: "Email not Found" });
+                return res.status(404).send({ error: "Email not found" });
             });
     } catch (error) {
         return res.status(500).send({ error });
