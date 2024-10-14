@@ -7,7 +7,7 @@ const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
 export function createAccessToken(user) {
     return jwt.sign(
-        { id: user._id, name: user.name, email: user.email },
+        { id: user._id, name: user.name, email: user.email, role: user.role },
         ACCESS_TOKEN_SECRET,
         {
             expiresIn: ACCESS_TOKEN_LIFE,
@@ -16,7 +16,7 @@ export function createAccessToken(user) {
 }
 export function createRefreshToken(user) {
     return jwt.sign(
-        { id: user._id, name: user.name, email: user.email },
+        { id: user._id, name: user.name, email: user.email, role: user.role },
         REFRESH_TOKEN_SECRET,
         {
             expiresIn: REFRESH_TOKEN_LIFE,

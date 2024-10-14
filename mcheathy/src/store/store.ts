@@ -8,6 +8,7 @@ type unregisteredUserState = {
     dob: Date;
     phone: string;
     gender: boolean;
+    role: string;
 };
 type unregisteredUserAction = {
     updateName: (name: unregisteredUserState["name"]) => void;
@@ -17,6 +18,7 @@ type unregisteredUserAction = {
     updateDob: (name: unregisteredUserState["dob"]) => void;
     updatePhone: (name: unregisteredUserState["phone"]) => void;
     updateGender: (name: unregisteredUserState["gender"]) => void;
+    updateRole: (name: unregisteredUserState["role"]) => void;
 };
 
 export const useUnresgisterStore = create<
@@ -29,6 +31,7 @@ export const useUnresgisterStore = create<
     dob: new Date(),
     phone: "",
     gender: false,
+    role: "",
     updateName: (name) => set(() => ({ name: name })),
     updateEmail: (email) => set(() => ({ email: email })),
     updatePassword: (password) => set(() => ({ password: password })),
@@ -36,6 +39,7 @@ export const useUnresgisterStore = create<
     updateDob: (dob) => set(() => ({ dob: dob })),
     updatePhone: (phone) => set(() => ({ phone: phone })),
     updateGender: (gender) => set(() => ({ gender: gender })),
+    updateRole: (role) => set(() => ({ role: role })),
 }));
 type TokenState = {
     accessToken: string | null;

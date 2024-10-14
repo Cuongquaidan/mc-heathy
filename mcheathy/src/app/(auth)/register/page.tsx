@@ -34,6 +34,7 @@ function RegisterPage() {
     const updateGender = useUnresgisterStore((state) => state.updateGender);
     const updatePhone = useUnresgisterStore((state) => state.updatePhone);
     const updateDob = useUnresgisterStore((state) => state.updateDob);
+    const updateRole = useUnresgisterStore((state) => state.updateRole);
     const searchParams = useSearchParams();
     const error = searchParams.get("error");
     const formSchema = z.object({
@@ -103,6 +104,7 @@ function RegisterPage() {
             updateDob(formValues.dob);
             updatePhone(formValues.phone);
             updateGender(formValues.gender);
+            updateRole("user");
             router.push("/register/otp");
         } else {
             toast.error("Please fill out the form correctly!", {

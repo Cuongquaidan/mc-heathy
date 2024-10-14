@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { type } from "os";
 
 const UserScheme = new Schema({
     email: { type: String, required: true },
@@ -8,6 +9,7 @@ const UserScheme = new Schema({
     gender: { type: Boolean, required: true },
     avatar: { type: String, required: true },
     dob: { type: Date, required: true },
+    role: { type: String, required: true },
 });
 
 const UserModel = mongoose.models.User || mongoose.model("User", UserScheme);

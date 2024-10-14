@@ -64,6 +64,7 @@ function OTPPage() {
                     phone,
                     avatar,
                     gender,
+                    role: "user",
                 }),
             }
         );
