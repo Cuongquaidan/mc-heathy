@@ -11,6 +11,6 @@ router
 router.route("/register/verify-otp/:otp").get(mailController.verifyOTP);
 router.route("/register").post(authController.register);
 router.route("/login").post(authController.login);
-
+router.route("/token").post(authController.getAccessToken);
 export default router;
 // authController.verifyEmail, localVariables, mailController.sendOTP

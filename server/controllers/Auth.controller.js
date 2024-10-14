@@ -1,4 +1,5 @@
 import connect from "../database/conn.js";
+import { createAccessToken, createRefreshToken } from "../jwt/jwt.js";
 import UserModel from "../models/User.model.js";
 import bcrypt from "bcryptjs";
 export const verifyEmail = async (req, res, next) => {
@@ -59,37 +60,53 @@ export async function login(req, res) {
     const { email, password } = req.body;
 
     try {
+        const existingUser = await UserModel.findOne({ email });
+        if (!existingUser)
+            return res.status(404).send({ error: "Email not found" });
+
         UserModel.findOne({ email })
             .then((user) => {
                 bcrypt
                     .compare(password, user.password)
                     .then(() => {
                         // create jwt token
-                        // const token = jwt.sign(
-                        //     {
-                        //         userId: user._id,
-                        //         email: user.email,
-                        //     },
-                        //     ENV.JWT_SECRET,
-                        //     { expiresIn: "24h" }
-                        // );
+                        const accessToken = createAccessToken(user);
+                        const refreshToken = createRefreshToken(user);
 
                         return res.status(200).send({
                             message: "Login Successful...!",
-                            email: user.email,
-                            // token,
+                            username: user.email,
+                            accessToken,
+                            refreshToken,
                         });
                     })
                     .catch((error) => {
                         return res
                             .status(400)
-                            .send({ error: "Password does not match" });
+                            .send({ error: "Password does not Match" });
                     });
             })
             .catch((error) => {
-                return res.status(404).send({ error: "Email not found" });
+                return res.status(404).send({ error: "Username not Found" });
             });
     } catch (error) {
         return res.status(500).send({ error });
     }
+}
+export function getAccessToken(req, res) {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken) {
+        return res.status(401).json({ message: "Refresh token is required" });
+    }
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return res.status(403).json({ message: "Invalid refresh token" });
+        }
+
+        const newAccessToken = createAccessToken({ user });
+
+        res.json({ accessToken: newAccessToken });
+    });
 }

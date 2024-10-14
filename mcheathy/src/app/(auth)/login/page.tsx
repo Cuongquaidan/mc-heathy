@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTokenStorage } from "@/store/store";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Must be a valid email" }),
@@ -26,6 +27,7 @@ const formSchema = z.object({
 });
 
 function LoginPage() {
+    const { login } = useTokenStorage();
     const searchParams = useSearchParams();
     const message = searchParams.get("message");
     const router = useRouter();
@@ -50,21 +52,21 @@ function LoginPage() {
                 }
             );
 
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-
             const data = await response.json();
             console.log("Response data:", data);
 
             if (data.message === "Login Successful...!") {
+                const { accessToken, refreshToken } = data;
+                login(accessToken, refreshToken);
                 router.push("/home");
+            }
+            if (data.error === "Password does not match") {
+                toast.error(data.error, {
+                    autoClose: 2000,
+                });
             }
         } catch (error) {
             console.error("Error during login:", error);
-            toast.error("Login failed. Please try again.", {
-                autoClose: 2000,
-            });
         }
     }
 

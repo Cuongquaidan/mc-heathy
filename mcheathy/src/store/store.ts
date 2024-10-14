@@ -1,5 +1,5 @@
 import { create } from "zustand";
-
+import { persist, createJSONStorage } from "zustand/middleware";
 type unregisteredUserState = {
     name: string;
     email: string;
@@ -37,3 +37,50 @@ export const useUnresgisterStore = create<
     updatePhone: (phone) => set(() => ({ phone: phone })),
     updateGender: (gender) => set(() => ({ gender: gender })),
 }));
+type TokenState = {
+    accessToken: string | null;
+    refreshToken: string | null;
+};
+type TokenAction = {
+    login: (accessToken: string, refreshToken: string) => void;
+    logout: () => void;
+    renewAccessToken: () => Promise<void>;
+};
+export const useTokenStorage = create<TokenState & TokenAction>()(
+    persist(
+        (set, get) => ({
+            accessToken: null,
+            refreshToken: null,
+
+            login: (accessToken: string, refreshToken: string) => {
+                set({ accessToken, refreshToken });
+            },
+            logout: () => {
+                set({ accessToken: null, refreshToken: null });
+            },
+            renewAccessToken: async () => {
+                const refreshToken = get().refreshToken;
+                if (!refreshToken) return;
+                try {
+                    const response = await fetch("/token", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ refreshToken }),
+                    });
+
+                    const data = await response.json();
+                    set({ accessToken: data.accessToken });
+                } catch (error) {
+                    console.log("Gia hạn token thất bại", error);
+                    get().logout();
+                }
+            },
+        }),
+        {
+            name: "auth-storage", // Tên cho trạng thái lưu trữ trong localStorage
+            storage: createJSONStorage(() => localStorage), // Sử dụng localStorage
+        }
+    )
+);
