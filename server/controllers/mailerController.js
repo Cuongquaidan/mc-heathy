@@ -33,8 +33,6 @@ export const sendOTP = async (req, res) => {
             outro: "Thank you so much",
         },
     };
-    console.log(process.env.NODEMAILER_EMAIL);
-    console.log(process.env.NODEMAILER_PASSWORD);
 
     const emailBody = MailGenerator.generate(email);
     const message = {
@@ -63,5 +61,5 @@ export async function verifyOTP(req, res) {
         req.app.locals.resetSession = true;
         return res.status(201).send({ msg: "Verify Successsfully!" });
     }
-    return res.status(400).send({ error: "OTP is valid" });
+    return res.status(400).send({ error: req.app.locals.OTP });
 }

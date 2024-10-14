@@ -18,12 +18,12 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import convertToBase64 from "@/helpers/convertbase64";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useUnresgisterStore } from "@/store/store";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 function RegisterPage() {
     const [file, setFile] = useState<string>();
     const router = useRouter();
@@ -34,6 +34,8 @@ function RegisterPage() {
     const updateGender = useUnresgisterStore((state) => state.updateGender);
     const updatePhone = useUnresgisterStore((state) => state.updatePhone);
     const updateDob = useUnresgisterStore((state) => state.updateDob);
+    const searchParams = useSearchParams();
+    const error = searchParams.get("error");
     const formSchema = z.object({
         name: z.string().min(2).max(50),
         email: z.string().email({ message: "Must be a valid email" }),
@@ -103,6 +105,13 @@ function RegisterPage() {
             });
         }
     }
+    useEffect(() => {
+        if (error) {
+            toast.error(error, {
+                autoClose: 2000,
+            });
+        }
+    }, [error]);
 
     return (
         <Form {...form}>

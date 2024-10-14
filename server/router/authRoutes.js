@@ -5,8 +5,11 @@ import { localVariables } from "../middlewares/auth.js";
 
 const router = Router();
 
-router.route("/register/otp").post(mailController.sendOTP);
+router
+    .route("/register/otp")
+    .post(authController.verifyEmail, localVariables, mailController.sendOTP);
 router.route("/register/verify-otp/:otp").get(mailController.verifyOTP);
+router.route("/register").post(authController.register);
 
 export default router;
 // authController.verifyEmail, localVariables, mailController.sendOTP
