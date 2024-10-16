@@ -12,13 +12,13 @@ type unregisteredUserState = {
 };
 type unregisteredUserAction = {
     updateName: (name: unregisteredUserState["name"]) => void;
-    updateEmail: (name: unregisteredUserState["email"]) => void;
-    updatePassword: (name: unregisteredUserState["password"]) => void;
-    updateAvatar: (name: unregisteredUserState["avatar"]) => void;
-    updateDob: (name: unregisteredUserState["dob"]) => void;
-    updatePhone: (name: unregisteredUserState["phone"]) => void;
-    updateGender: (name: unregisteredUserState["gender"]) => void;
-    updateRole: (name: unregisteredUserState["role"]) => void;
+    updateEmail: (email: unregisteredUserState["email"]) => void;
+    updatePassword: (password: unregisteredUserState["password"]) => void;
+    updateAvatar: (avatar: unregisteredUserState["avatar"]) => void;
+    updateDob: (dob: unregisteredUserState["dob"]) => void;
+    updatePhone: (phone: unregisteredUserState["phone"]) => void;
+    updateGender: (gender: unregisteredUserState["gender"]) => void;
+    updateRole: (role: unregisteredUserState["role"]) => void;
 };
 
 export const useUnresgisterStore = create<
@@ -41,6 +41,48 @@ export const useUnresgisterStore = create<
     updateGender: (gender) => set(() => ({ gender: gender })),
     updateRole: (role) => set(() => ({ role: role })),
 }));
+
+type currentUserState = {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string;
+    dob: Date;
+    phone: string;
+    gender: boolean;
+    role: string;
+};
+type currentUserAction = {
+    updateId: (name: currentUserState["id"]) => void;
+    updateName: (name: currentUserState["name"]) => void;
+    updateEmail: (email: currentUserState["email"]) => void;
+    updateAvatar: (avatar: currentUserState["avatar"]) => void;
+    updateDob: (dob: currentUserState["dob"]) => void;
+    updatePhone: (phone: currentUserState["phone"]) => void;
+    updateGender: (gender: currentUserState["gender"]) => void;
+    updateRole: (role: currentUserState["role"]) => void;
+};
+export const useCurrentUserStore = create<currentUserAction & currentUserState>(
+    (set) => ({
+        id: "",
+        name: "",
+        email: "",
+        avatar: "",
+        dob: new Date(),
+        phone: "",
+        gender: false,
+        role: "",
+        updateId: (id) => set(() => ({ id: id })),
+        updateName: (name) => set(() => ({ name: name })),
+        updateEmail: (email) => set(() => ({ email: email })),
+        updateAvatar: (avatar) => set(() => ({ avatar: avatar })),
+        updateDob: (dob) => set(() => ({ dob: dob })),
+        updatePhone: (phone) => set(() => ({ phone: phone })),
+        updateGender: (gender) => set(() => ({ gender: gender })),
+        updateRole: (role) => set(() => ({ role: role })),
+    })
+);
+
 type TokenState = {
     accessToken: string | null;
     refreshToken: string | null;
