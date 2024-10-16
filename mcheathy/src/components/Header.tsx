@@ -14,13 +14,18 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useCurrentUserStore } from "@/store/store";
+import useFetchData from "@/hooks/useFetchData";
+import { User } from "@/lib/interface";
 function Header() {
     const pathName = usePathname();
     const { setTheme } = useTheme();
-    const user = {
-        avatar: "",
-        name: "Admin",
-    };
+    const currentUserID = useCurrentUserStore((state) => state.id);
+    const { data: user, error } = useFetchData<User>(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${currentUserID}`
+    );
+    if (error) return <div>{error}</div>;
+
     return (
         <div className="max-w-[100%] p-10 flex justify-between items-center px-36">
             <Link
@@ -76,12 +81,14 @@ function Header() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Avatar className="select-none">
-                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarImage src={user.avatar} />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56">
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuLabel>
+                                {user.name}({user.role})
+                            </DropdownMenuLabel>
                             <DropdownMenuSeparator />
 
                             <DropdownMenuItem>My Profile</DropdownMenuItem>

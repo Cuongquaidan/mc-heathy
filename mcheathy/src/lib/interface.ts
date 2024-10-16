@@ -18,6 +18,16 @@ export interface Speciality {
     name: string;
     slug: string;
 }
+export interface User {
+    _id: string;
+    name: string;
+    email: string;
+    avatar: string;
+    dob: Date;
+    phone: string;
+    gender: boolean;
+    role: string;
+}
 
 export interface Appointment {
     userId: Types.ObjectId;
