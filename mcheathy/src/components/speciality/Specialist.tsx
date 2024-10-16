@@ -4,8 +4,10 @@ import { Doctor, Speciality } from "@/lib/interface";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import DoctorListCustom from "../doctor/DoctorListCustom";
+import { useTokenStorage } from "@/store/store";
 
 function Specialist() {
+    const accessToken = useTokenStorage((state) => state.accessToken);
     const [speciality, setSpeciality] = useState<string>("");
     const { data: specialist, error: errorSpe } = useFetchData<Speciality[]>(
         `${process.env.NEXT_PUBLIC_API_URL}/specialitys/getAll`
@@ -15,7 +17,9 @@ function Specialist() {
             process.env.NEXT_PUBLIC_API_URL
         }/doctors/getDoctorsBySpeciality?speciality=${encodeURIComponent(
             speciality
-        )}`
+        )}`,
+        "Fetch data failed",
+        accessToken || " "
     );
     if (errorSpe) return <div>{errorSpe}</div>;
     if (error) return <div>{error}</div>;

@@ -13,6 +13,10 @@
 //         res.status(401).json({ error: "Authentication Failed!" });
 //     }
 // }
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+dotenv.config();
+
 export function localVariables(req, res, next) {
     req.app.locals = {
         OTP: null,
@@ -50,7 +54,7 @@ export function verifyAccessToken(req, res, next) {
                 .status(401)
                 .json({ message: "Access token has expired" });
         } else {
-            return res.status(401).json({ message: "Invalid access token" });
+            return res.status(401).json({ token });
         }
     }
 }

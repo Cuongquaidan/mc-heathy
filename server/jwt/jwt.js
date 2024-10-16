@@ -1,4 +1,6 @@
+import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+dotenv.config();
 
 const ACCESS_TOKEN_LIFE = process.env.ACCESS_TOKEN_LIFE;
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;

@@ -22,9 +22,13 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useTokenStorage } from "@/store/store";
 function TableAppointments() {
+    const accessToken = useTokenStorage((state) => state.accessToken);
     const { data: appointments, error } = useFetchData<Appointment[]>(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments/getAll`
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments/getAll`,
+        "Fetch data failed",
+        accessToken || " "
     );
     const handleDelete = async (id: string) => {
         try {
@@ -32,6 +36,9 @@ function TableAppointments() {
                 `${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}`,
                 {
                     method: "DELETE",
+                    headers: {
+                        authorization: `Bearer ${accessToken}`,
+                    },
                 }
             );
 

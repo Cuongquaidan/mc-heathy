@@ -11,16 +11,22 @@ import avatarDefault from "@/public/assets/images/avatar.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import { useTokenStorage } from "@/store/store";
 function CalendarBook() {
     const paramsSearch = useSearchParams();
     const doctorId = paramsSearch.get("doctorId");
     console.log(doctorId);
+    const accessToken = useTokenStorage((state) => state.accessToken);
     const { data: doctor, error: errorDoctor } = useFetchData<Doctor>(
-        `${process.env.NEXT_PUBLIC_API_URL}/doctors/getDoctorById?doctorId=${doctorId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/doctors/getDoctorById?doctorId=${doctorId}`,
+        "Fetch data failed",
+        accessToken || ""
     );
     console.log(doctor);
     const { data: appointmentsList, error } = useFetchData<Appointment[]>(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments/getByDoctorId?doctorId=${doctorId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments/getByDoctorId?doctorId=${doctorId}`,
+        "Fetch data failed",
+        accessToken || ""
     );
     const user = {
         _id: "66fbea2425920a2268563f55",

@@ -10,11 +10,14 @@ import {
 import DoctorItem from "../doctor/DoctorItem";
 import { Doctor } from "@/lib/interface";
 import useFetchData from "@/hooks/useFetchData";
+import { useTokenStorage } from "@/store/store";
 function DatePickerOfFind() {
     const [date, setDate] = useState<Date | undefined>(new Date());
-
+    const accessToken = useTokenStorage((state) => state.accessToken);
     const { data: doctors, error } = useFetchData<Doctor[]>(
-        `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAvailableDoctorsByDate?date=${date}`
+        `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAvailableDoctorsByDate?date=${date}`,
+        "Fetch data failed",
+        accessToken || " "
     );
     if (error) return <div>{error}</div>;
     return (

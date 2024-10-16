@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 
 const useFetchData = <T,>(
     url: string,
-    errorMessage: string = "Fetch data failed"
+    errorMessage: string = "Fetch data failed",
+    accessToken: string = " "
 ) => {
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -11,7 +12,13 @@ const useFetchData = <T,>(
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                });
                 if (!response.ok) throw new Error(errorMessage);
                 const fetchedData: T = await response.json();
                 setData(fetchedData);
@@ -23,7 +30,7 @@ const useFetchData = <T,>(
         };
 
         fetchData();
-    }, [url, errorMessage]);
+    }, [url, errorMessage, accessToken]);
 
     return { data, loading, error };
 };

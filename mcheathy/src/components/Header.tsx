@@ -14,15 +14,18 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useCurrentUserStore } from "@/store/store";
+import { useCurrentUserStore, useTokenStorage } from "@/store/store";
 import useFetchData from "@/hooks/useFetchData";
 import { User } from "@/lib/interface";
 function Header() {
     const pathName = usePathname();
     const { setTheme } = useTheme();
     const currentUserID = useCurrentUserStore((state) => state.id);
+    const accessToken = useTokenStorage((state) => state.accessToken);
     const { data: user, error } = useFetchData<User>(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${currentUserID}`
+        `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${currentUserID}`,
+        "Fetch data failed",
+        accessToken || " "
     );
     if (error) return <div>{error}</div>;
 

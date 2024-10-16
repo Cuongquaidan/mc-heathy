@@ -25,8 +25,10 @@ import {
 } from "@/components/ui/select";
 import convertToBase64 from "@/helpers/convertbase64";
 import Image from "next/image";
+import { useTokenStorage } from "@/store/store";
 
 function AddDoctor() {
+    const accessToken = useTokenStorage((state) => state.accessToken);
     const { toast } = useToast();
     const [file, setFile] = useState<string>();
     const formSchema = z.object({
@@ -93,6 +95,7 @@ function AddDoctor() {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        authorization: `Bearer ${accessToken}`,
                     },
                     body: JSON.stringify(formValues),
                 }

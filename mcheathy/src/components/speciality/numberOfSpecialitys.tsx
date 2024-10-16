@@ -1,15 +1,23 @@
 "use client";
 import { Speciality } from "@/lib/interface";
+import { useTokenStorage } from "@/store/store";
 import React, { useEffect, useState } from "react";
 
 function NumberOfSpecialitys() {
     const [list, setList] = useState<Speciality[]>([]);
-
+    const accessToken = useTokenStorage((state) => state.accessToken);
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/specialitys/getAll`
+                    `${process.env.NEXT_PUBLIC_API_URL}/specialitys/getAll`,
+                    {
+                        method: "GET",
+                        headers: {
+                            authorization: `Bearer ${accessToken}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
                 );
                 if (!response.ok) {
                     throw new Error("Network response was not ok");

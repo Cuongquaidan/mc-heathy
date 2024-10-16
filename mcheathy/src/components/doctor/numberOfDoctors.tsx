@@ -1,10 +1,14 @@
 "use client";
 import useFetchData from "@/hooks/useFetchData";
 import { Doctor } from "@/lib/interface";
+import { useTokenStorage } from "@/store/store";
 
 function NumberOfDoctors() {
+    const accessToken = useTokenStorage((state) => state.accessToken);
     const { data: doctors, error } = useFetchData<Doctor[]>(
-        `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAll`
+        `${process.env.NEXT_PUBLIC_API_URL}/doctors/getAll`,
+        "Fetch data failed",
+        accessToken || " "
     );
     console.log(doctors);
     if (error) return <div>{error}</div>;

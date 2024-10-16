@@ -15,7 +15,6 @@ function DoctorItem({
     width: string;
     height: string;
     isFlex: boolean;
-    dateTime: Date;
 }) {
     return (
         <div
