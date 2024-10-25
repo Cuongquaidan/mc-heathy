@@ -17,17 +17,20 @@ function CalendarBook() {
     const doctorId = paramsSearch.get("doctorId");
     console.log(doctorId);
     const accessToken = useTokenStorage((state) => state.accessToken);
+
     const { data: doctor, error: errorDoctor } = useFetchData<Doctor>(
         `${process.env.NEXT_PUBLIC_API_URL}/doctors/getDoctorById?doctorId=${doctorId}`,
         "Fetch data failed",
         accessToken || ""
     );
+
     console.log(doctor);
     const { data: appointmentsList, error } = useFetchData<Appointment[]>(
         `${process.env.NEXT_PUBLIC_API_URL}/appointments/getByDoctorId?doctorId=${doctorId}`,
         "Fetch data failed",
         accessToken || ""
     );
+
     const user = {
         _id: "66fbea2425920a2268563f55",
         name: "Nguyễn Văn Đạn",
@@ -94,6 +97,9 @@ function CalendarBook() {
     };
     if (error || errorDoctor)
         return <div>{"doctor:" + errorDoctor || "Date:" + error}</div>;
+    if (!accessToken) {
+        router.push("/login");
+    }
     return (
         <div className="flex gap-10">
             <ToastContainer />

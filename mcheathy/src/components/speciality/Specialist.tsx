@@ -5,12 +5,16 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import DoctorListCustom from "../doctor/DoctorListCustom";
 import { useTokenStorage } from "@/store/store";
+import { useRouter } from "next/navigation";
 
 function Specialist() {
+    const router = useRouter();
     const accessToken = useTokenStorage((state) => state.accessToken);
     const [speciality, setSpeciality] = useState<string>("");
     const { data: specialist, error: errorSpe } = useFetchData<Speciality[]>(
-        `${process.env.NEXT_PUBLIC_API_URL}/specialitys/getAll`
+        `${process.env.NEXT_PUBLIC_API_URL}/specialitys/getAll`,
+        "Fetch data failed",
+        accessToken || " "
     );
     const { data: doctors, error } = useFetchData<Doctor[]>(
         `${
@@ -23,6 +27,9 @@ function Specialist() {
     );
     if (errorSpe) return <div>{errorSpe}</div>;
     if (error) return <div>{error}</div>;
+    if (!accessToken) {
+        router.push("/login");
+    }
     return (
         <div className="grid grid-cols-[1fr,4fr] gap-20 mt-10">
             <div className="flex flex-col gap-5">

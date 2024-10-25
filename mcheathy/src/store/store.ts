@@ -90,7 +90,7 @@ type TokenState = {
 type TokenAction = {
     login: (accessToken: string, refreshToken: string) => void;
     logout: () => void;
-    renewAccessToken: () => Promise<void>;
+    renewAccessToken: () => Promise<boolean>;
 };
 export const useTokenStorage = create<TokenState & TokenAction>()(
     persist(
@@ -106,21 +106,29 @@ export const useTokenStorage = create<TokenState & TokenAction>()(
             },
             renewAccessToken: async () => {
                 const refreshToken = get().refreshToken;
-                if (!refreshToken) return;
+                if (!refreshToken) return false;
                 try {
-                    const response = await fetch("/token", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ refreshToken }),
-                    });
+                    const response = await fetch(
+                        `${process.env.NEXT_PUBLIC_API_URL}/auth/token`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ refreshToken }),
+                        }
+                    );
+                    if (!response.ok) {
+                        throw new Error("Failed to renew token");
+                    }
 
                     const data = await response.json();
                     set({ accessToken: data.accessToken });
+                    return true;
                 } catch (error) {
                     console.log("Gia hạn token thất bại", error);
                     get().logout();
+                    return false;
                 }
             },
         }),

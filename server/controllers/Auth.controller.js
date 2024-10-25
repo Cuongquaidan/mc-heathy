@@ -2,6 +2,9 @@ import connect from "../database/conn.js";
 import { createAccessToken, createRefreshToken } from "../jwt/jwt.js";
 import UserModel from "../models/User.model.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 export const verifyEmail = async (req, res, next) => {
     await connect();
     try {

@@ -8,10 +8,6 @@ router.route("/getAll").get(verifyAccessToken, appointmentControllers.getAll);
 router
     .route("/getByDoctorId")
     .get(verifyAccessToken, appointmentControllers.getAppointmentByDoctorId);
-router
-    .route("/addAppointment")
-    .post(verifyAccessToken, appointmentControllers.addAppointment);
-router
-    .route("/:id")
-    .delete(verifyAccessToken, appointmentControllers.deleteAppointment);
+router.route("/addAppointment").post(appointmentControllers.addAppointment);
+router.route("/:id").delete(appointmentControllers.deleteAppointment);
 export default router;

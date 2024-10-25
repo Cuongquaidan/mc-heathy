@@ -3,6 +3,7 @@ import { Doctor } from "@/lib/interface";
 import DoctorItem from "./DoctorItem";
 import useFetchData from "@/hooks/useFetchData";
 import { useTokenStorage } from "@/store/store";
+import { useRouter } from "next/navigation";
 
 function DoctorsList() {
     const accessToken = useTokenStorage((state) => state.accessToken);
@@ -11,6 +12,10 @@ function DoctorsList() {
         "Fetch data failed",
         accessToken || " "
     );
+    const router = useRouter();
+    if (!accessToken) {
+        router.push("/login");
+    }
     if (error) return <div>{error}</div>;
     return (
         <div className="flex flex-wrap gap-10 p-10">

@@ -23,6 +23,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useTokenStorage } from "@/store/store";
+import { useRouter } from "next/navigation";
 function TableAppointments() {
     const accessToken = useTokenStorage((state) => state.accessToken);
     const { data: appointments, error } = useFetchData<Appointment[]>(
@@ -30,6 +31,10 @@ function TableAppointments() {
         "Fetch data failed",
         accessToken || " "
     );
+    const router = useRouter();
+    if (!accessToken) {
+        router.push("/login");
+    }
     const handleDelete = async (id: string) => {
         try {
             const response = await fetch(
