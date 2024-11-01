@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Metadata } from "next";
 import Specialist from "@/components/speciality/Specialist";
+import { Skeleton } from "@/components/ui/skeleton";
 export const metadata: Metadata = {
     title: "All doctors",
     description:
@@ -9,10 +10,14 @@ export const metadata: Metadata = {
 function AllDoctorsPage() {
     return (
         <div className="max-w-screen w-[1400px] mx-auto min-h-screen">
-            <p className="text-2xl italic">
-                Browse through the doctors specialist ( Re-click to disable the
-                filter )
-            </p>
+            <Suspense
+                fallback={<Skeleton className="h-4 w-[150px]"></Skeleton>}
+            >
+                <p className="text-2xl italic">
+                    Browse through the doctors specialist ( Re-click to disable
+                    the filter )
+                </p>
+            </Suspense>
 
             <Specialist></Specialist>
         </div>

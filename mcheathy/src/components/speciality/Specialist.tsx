@@ -1,11 +1,12 @@
 "use client";
 import useFetchData from "@/hooks/useFetchData";
 import { Doctor, Speciality } from "@/lib/interface";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { Button } from "../ui/button";
 import DoctorListCustom from "../doctor/DoctorListCustom";
 import { useTokenStorage } from "@/store/store";
 import { useRouter } from "next/navigation";
+import SpecialistSkeleton from "../skeleton/SpecialistSkeleton";
 
 function Specialist() {
     const router = useRouter();
@@ -31,36 +32,38 @@ function Specialist() {
         router.push("/login");
     }
     return (
-        <div className="grid grid-cols-[1fr,4fr] gap-20 mt-10">
-            <div className="flex flex-col gap-5">
-                {specialist?.map((item, index) => (
-                    <div key={index}>
-                        <Button
-                            variant={"outline"}
-                            className={`w-full hover:bg-blue-300 hover:border-none border-primaryGray h-12 text-md ${
-                                item.name == speciality
-                                    ? "bg-blue-300 border-none dark:bg-gray-700"
-                                    : ""
-                            }`}
-                            onClick={() => {
-                                if (item.name != speciality) {
-                                    setSpeciality(item.name);
-                                } else {
-                                    setSpeciality("");
-                                }
-                            }}
-                        >
-                            {item.name}
-                        </Button>
-                    </div>
-                ))}
+        <Suspense fallback={<SpecialistSkeleton></SpecialistSkeleton>}>
+            <div className="grid grid-cols-[1fr,4fr] gap-20 mt-10">
+                <div className="flex flex-col gap-5">
+                    {specialist?.map((item, index) => (
+                        <div key={index}>
+                            <Button
+                                variant={"outline"}
+                                className={`w-full hover:bg-blue-300 hover:border-none border-primaryGray h-12 text-md ${
+                                    item.name == speciality
+                                        ? "bg-blue-300 border-none dark:bg-gray-700"
+                                        : ""
+                                }`}
+                                onClick={() => {
+                                    if (item.name != speciality) {
+                                        setSpeciality(item.name);
+                                    } else {
+                                        setSpeciality("");
+                                    }
+                                }}
+                            >
+                                {item.name}
+                            </Button>
+                        </div>
+                    ))}
+                </div>
+                <div>
+                    {doctors && (
+                        <DoctorListCustom data={doctors}></DoctorListCustom>
+                    )}
+                </div>
             </div>
-            <div>
-                {doctors && (
-                    <DoctorListCustom data={doctors}></DoctorListCustom>
-                )}
-            </div>
-        </div>
+        </Suspense>
     );
 }
 
