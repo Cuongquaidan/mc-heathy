@@ -26,6 +26,7 @@ function DoctorsList() {
                     height="250px"
                     item={item}
                     key={index}
+                    isAdmin={true}
                 ></DoctorItem>
             ))}
         </div>

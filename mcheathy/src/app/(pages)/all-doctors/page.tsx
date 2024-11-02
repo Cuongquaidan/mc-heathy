@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Metadata } from "next";
 import Specialist from "@/components/speciality/Specialist";
 import { Skeleton } from "@/components/ui/skeleton";
+import SpecialistSkeleton from "@/components/skeleton/SpecialistSkeleton";
 export const metadata: Metadata = {
     title: "All doctors",
     description:
@@ -19,7 +20,9 @@ function AllDoctorsPage() {
                 </p>
             </Suspense>
 
-            <Specialist></Specialist>
+            <Suspense fallback={<SpecialistSkeleton></SpecialistSkeleton>}>
+                <Specialist></Specialist>
+            </Suspense>
         </div>
     );
 }
