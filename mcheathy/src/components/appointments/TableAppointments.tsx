@@ -180,14 +180,14 @@ function TableAppointments() {
                                 onClick={() => {
                                     setLimit(10);
                                 }}
-                                className="font-bold text-red-700 bg-red-300 hover:bg-red-200 hover:scale-95"
+                                className="font-bold text-red-700 bg-red-300 hover:bg-red-200 hover:scale-95 dark:text-red-700 dark:bg-red-300 dark:hover:bg-red-200 dark:hover:scale-95"
                             >
                                 Hide
                             </Button>
                         ) : (
                             <Button
                                 onClick={() => setLimit(20)}
-                                className="font-bold text-green-700 bg-green-300 hover:bg-green-200 hover:scale-110"
+                                className="font-bold text-green-700 bg-green-300 hover:bg-green-200 hover:scale-110 dark:text-green-700 dark:bg-green-300 dark:hover:bg-green-200 dark:hover:scale-110"
                             >
                                 Show more
                             </Button>
@@ -200,7 +200,7 @@ function TableAppointments() {
                 total={total}
                 onChange={onChange}
                 pageSize={20}
-                className="flex items-center justify-center w-full mx-auto mt-5"
+                className="flex items-center justify-center w-full p-3 mx-auto mt-5 font-bold "
             />
         </div>
     );

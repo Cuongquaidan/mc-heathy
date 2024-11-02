@@ -7,6 +7,7 @@ function DoctorListCustom({ data }: { data: Doctor[] }) {
         <div className="flex flex-wrap gap-10">
             {data?.map((item, index) => (
                 <DoctorItem
+                    isAdmin={false}
                     isFlex={false}
                     width="150px"
                     height="180px"

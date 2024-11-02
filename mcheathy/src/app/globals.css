@@ -54,3 +54,6 @@ h5 {
 .dark .react-calendar {
     background-color: black;
 }
+.dark .anticon {
+    color: #ccc;
+}

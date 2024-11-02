@@ -4,7 +4,7 @@ import { verifyAccessToken } from "../middlewares/auth.js";
 
 const router = Router();
 
-router.route("/getAll").get(verifyAccessToken, appointmentControllers.getAll);
+router.route("/get").get(verifyAccessToken, appointmentControllers.get);
 router
     .route("/getByDoctorId")
     .get(verifyAccessToken, appointmentControllers.getAppointmentByDoctorId);

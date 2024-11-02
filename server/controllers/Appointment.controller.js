@@ -2,11 +2,18 @@ import { error } from "console";
 import connect from "../database/conn.js";
 import AppointmentModel from "../models/Appointment.model.js";
 
-export async function getAll(req, res) {
+export async function get(req, res) {
     await connect();
     try {
-        const appointmentsList = await AppointmentModel.find();
-        return res.status(200).json(appointmentsList);
+        const page = parseInt(req.query.page) || 1; // Nếu không có `page` thì mặc định là 1
+        const limit = parseInt(req.query.limit) || 10; // Nếu không có `limit` thì mặc định là 10
+
+        const offset = (page - 1) * 20; // Mặc định 1 trang có 20 lịch
+        const total = await AppointmentModel.countDocuments();
+        const appointmentsList = await AppointmentModel.find()
+            .skip(offset)
+            .limit(limit);
+        return res.status(200).json({ appointmentsList, total });
     } catch (error) {
         return res.status(404).send({ error: "Cannot Find Appointments Data" });
     }
