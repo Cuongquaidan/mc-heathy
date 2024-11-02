@@ -24,13 +24,27 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useTokenStorage } from "@/store/store";
 import { useRouter } from "next/navigation";
+import { Pagination } from "antd";
+import type { PaginationProps } from "antd";
+import { Button } from "../ui/button";
+import { useState } from "react";
+
 function TableAppointments() {
     const accessToken = useTokenStorage((state) => state.accessToken);
-    const { data: appointments, error } = useFetchData<Appointment[]>(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments/getAll`,
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const { data, error } = useFetchData<{
+        appointmentsList: Appointment[];
+        total: number;
+    }>(
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments/get?page=${page}&limit=${limit}`,
         "Fetch data failed",
         accessToken || " "
     );
+    const { appointmentsList, total } = data || {
+        appointmentsList: [],
+        total: 0,
+    };
     const router = useRouter();
     if (!accessToken) {
         router.push("/login");
@@ -59,6 +73,10 @@ function TableAppointments() {
             console.error("Error:", error);
         }
     };
+    const onChange: PaginationProps["onChange"] = (pageNumber) => {
+        setPage(pageNumber);
+        setLimit(10);
+    };
     if (error) return <div>{error}</div>;
     return (
         <div className="p-10">
@@ -76,7 +94,7 @@ function TableAppointments() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {appointments?.map((item, index) => (
+                    {appointmentsList?.map((item, index) => (
                         <TableRow key={index}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell className="flex items-center gap-4">
@@ -154,6 +172,36 @@ function TableAppointments() {
                     ))}
                 </TableBody>
             </Table>
+            <div className="flex justify-center w-full mt-5">
+                {total > (page - 1) * 20 + 10 && (
+                    <div>
+                        {limit === 20 ? (
+                            <Button
+                                onClick={() => {
+                                    setLimit(10);
+                                }}
+                                className="font-bold text-red-700 bg-red-300 hover:bg-red-200 hover:scale-95"
+                            >
+                                Hide
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={() => setLimit(20)}
+                                className="font-bold text-green-700 bg-green-300 hover:bg-green-200 hover:scale-110"
+                            >
+                                Show more
+                            </Button>
+                        )}
+                    </div>
+                )}
+            </div>
+            <Pagination
+                defaultCurrent={1}
+                total={total}
+                onChange={onChange}
+                pageSize={20}
+                className="flex items-center justify-center w-full mx-auto mt-5"
+            />
         </div>
     );
 }
