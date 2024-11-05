@@ -12,6 +12,7 @@ import { User } from "@/lib/interface";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import Back from "./icons/Back";
+import { useRouter } from "next/navigation";
 
 interface MenuItem {
     name: string;
@@ -23,6 +24,8 @@ function SlideBar() {
     const { theme, setTheme } = useTheme();
     const currentUserID = useCurrentUserStore((state) => state.id);
     const accessToken = useTokenStorage((state) => state.accessToken);
+    const logout = useTokenStorage((state) => state.logout);
+    const router = useRouter();
     const { data: user, error } = useFetchData<User>(
         `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${currentUserID}`,
         "Fetch data failed",
@@ -90,7 +93,15 @@ function SlideBar() {
                 </div>
                 <div className="flex flex-col items-center gap-5 p-5 mt-10 text-xl text-center text-primaryGray">
                     {user?.name} ({user?.role}){" "}
-                    <Button className="w-full">Logout</Button>
+                    <Button
+                        className="w-full"
+                        onClick={() => {
+                            logout();
+                            router.push("/login");
+                        }}
+                    >
+                        Logout
+                    </Button>
                 </div>
             </div>
         </div>

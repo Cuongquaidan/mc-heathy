@@ -21,9 +21,11 @@ import HeaderSkeleton from "./skeleton/HeaderSkeleton";
 function Header() {
     const pathName = usePathname();
     const { setTheme } = useTheme();
-    const router = useRouter();
+
     const currentUserID = useCurrentUserStore((state) => state.id);
     const accessToken = useTokenStorage((state) => state.accessToken);
+    const logout = useTokenStorage((state) => state.logout);
+    const router = useRouter();
     const { data: user, error } = useFetchData<User>(
         `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${currentUserID}`,
         "Fetch data failed",
@@ -97,7 +99,9 @@ function Header() {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
 
-                                <DropdownMenuItem>My Profile</DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    Update Profile
+                                </DropdownMenuItem>
                                 <DropdownMenuSeparator />
 
                                 <DropdownMenuItem>
@@ -117,7 +121,14 @@ function Header() {
                                     </>
                                 )}
 
-                                <DropdownMenuItem>Log out</DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        logout();
+                                        router.push("/login");
+                                    }}
+                                >
+                                    Log out
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (

@@ -1,7 +1,6 @@
 import { useTokenStorage } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 
 const useFetchData = <T,>(
     url: string,
@@ -27,22 +26,22 @@ const useFetchData = <T,>(
                 });
 
                 // Kiểm tra mã trạng thái
-                if (response.status === 401) {
-                    const result = await Swal.fire({
-                        title: "Hết giờ làm việc",
-                        text: "Phiên làm việc hết hạn, bạn có muốn mở rộng?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonText: "Có",
-                        cancelButtonText: "Không",
-                    });
+                // if (response.status === 401) {
+                //     const result = await Swal.fire({
+                //         title: "Hết giờ làm việc",
+                //         text: "Phiên làm việc hết hạn, bạn có muốn mở rộng?",
+                //         icon: "warning",
+                //         showCancelButton: true,
+                //         confirmButtonText: "Có",
+                //         cancelButtonText: "Không",
+                //     });
 
-                    if (result.isConfirmed) {
-                        await renewAccessToken();
-                    }
+                //     if (result.isConfirmed) {
+                //         await renewAccessToken();
+                //     }
 
-                    return; // Trả về để không tiếp tục xử lý mã bên dưới
-                }
+                //     return; // Trả về để không tiếp tục xử lý mã bên dưới
+                // }
 
                 if (!response.ok) throw new Error(errorMessage);
                 const fetchedData: T = await response.json();

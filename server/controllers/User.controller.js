@@ -4,7 +4,7 @@ import UserModel from "../models/User.model.js";
 export async function getUserByID(req, res) {
     await connect();
     try {
-        const userID = req.query.userID;
+        const userID = req.user.id;
         const user = await UserModel.findById(userID).lean();
         if (!user) {
             return res.status(404).send({ error: "User not found" });

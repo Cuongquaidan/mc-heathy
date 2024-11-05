@@ -37,7 +37,29 @@ export async function getAppointmentByDoctorId(req, res) {
         return res.status(404).send({ error: "Cannot Find Appointments Data" });
     }
 }
+export async function getAppointmentByUserId(req, res) {
+    await connect();
+    try {
+        const userId = req.user.id;
+        const page = parseInt(req.query.page) || 1; // Nếu không có `page` thì mặc định là 1
+        const limit = parseInt(req.query.limit) || 10; // Nếu không có `limit` thì mặc định là 10
+        const offset = (page - 1) * 20; // Mặc định 1 trang có 20 lịch
+        const total = await AppointmentModel.find({
+            userId,
+        }).countDocuments();
 
+        const appointmentsList = await AppointmentModel.find({
+            userId,
+        })
+            .skip(offset)
+            .limit(limit)
+            .lean();
+
+        return res.status(200).json({ appointmentsList, total });
+    } catch (error) {
+        return res.status(404).send({ error: "Cannot Find Appointments Data" });
+    }
+}
 export async function addAppointment(req, res) {
     await connect();
     try {
