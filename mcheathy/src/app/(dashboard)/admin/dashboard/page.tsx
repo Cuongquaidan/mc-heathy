@@ -1,5 +1,6 @@
 import NumberOfDoctors from "@/components/doctor/numberOfDoctors";
 import NumberOfSpecialitys from "@/components/speciality/numberOfSpecialitys";
+import ChartMixedSpecielWithDoctor from "@/components/chart/ChartMixedSpecielWithDoctor";
 import React from "react";
 
 function AdminPage() {
@@ -8,6 +9,7 @@ function AdminPage() {
             <NumberOfDoctors></NumberOfDoctors>
 
             <NumberOfSpecialitys></NumberOfSpecialitys>
+            <ChartMixedSpecielWithDoctor></ChartMixedSpecielWithDoctor>
         </div>
     );
 }

@@ -2,7 +2,6 @@
 import useFetchData from "@/hooks/useFetchData";
 import { Doctor } from "@/lib/interface";
 import { useTokenStorage } from "@/store/store";
-import { useRouter } from "next/navigation";
 
 function NumberOfDoctors() {
     const accessToken = useTokenStorage((state) => state.accessToken);
@@ -11,10 +10,7 @@ function NumberOfDoctors() {
         "Fetch data failed",
         accessToken || " "
     );
-    const router = useRouter();
-    if (!accessToken) {
-        router.push("/login");
-    }
+
     console.log(doctors);
     if (error) return <div>{error}</div>;
 
