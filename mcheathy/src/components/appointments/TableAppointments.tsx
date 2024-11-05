@@ -29,7 +29,7 @@ import { useTokenStorage } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { Pagination } from "antd";
 import type { PaginationProps } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -48,19 +48,25 @@ const formSchema = z.object({
 function TableAppointments() {
     const accessToken = useTokenStorage((state) => state.accessToken);
     const [page, setPage] = useState(1);
+    const [patientPhone, setPatientPhone] = useState("");
     const [limit, setLimit] = useState(10);
+    const [appointmentsList, setAppointmentsList] = useState<
+        Appointment[] | undefined
+    >(undefined);
+    const [total, setTotal] = useState(0);
+
     const { data, error } = useFetchData<{
         appointmentsList: Appointment[];
         total: number;
     }>(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments/get?page=${page}&limit=${limit}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments/get?&patientPhone=${patientPhone}&page=${page}&limit=${limit}`,
         "Fetch data failed",
         accessToken || " "
     );
-    const { appointmentsList, total } = data || {
-        appointmentsList: [],
-        total: 0,
-    };
+    useEffect(() => {
+        setAppointmentsList(data?.appointmentsList);
+        setTotal(data?.total ?? 0);
+    }, [data?.appointmentsList, data?.total]);
     const router = useRouter();
     if (!accessToken) {
         router.push("/login");
@@ -90,8 +96,8 @@ function TableAppointments() {
         }
     };
     const onChange: PaginationProps["onChange"] = (pageNumber) => {
-        setPage(pageNumber);
         setLimit(10);
+        setPage(pageNumber);
     };
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -100,7 +106,7 @@ function TableAppointments() {
         },
     });
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+        setPatientPhone(values.search);
     }
     if (error) return <div>{error}</div>;
     return (

@@ -10,4 +10,5 @@ router
     .get(verifyAccessToken, appointmentControllers.getAppointmentByDoctorId);
 router.route("/addAppointment").post(appointmentControllers.addAppointment);
 router.route("/:id").delete(appointmentControllers.deleteAppointment);
+
 export default router;
