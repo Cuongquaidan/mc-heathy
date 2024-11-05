@@ -11,6 +11,7 @@ import useFetchData from "@/hooks/useFetchData";
 import { User } from "@/lib/interface";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
+import Back from "./icons/Back";
 
 interface MenuItem {
     name: string;
@@ -67,6 +68,12 @@ function SlideBar() {
                                 icon={item.icon}
                             />
                         ))}
+                        <SliderBarItem
+                            key={"Back to home"}
+                            name={"Back to home"}
+                            url={"/home"}
+                            icon={<Back></Back>}
+                        />
                         <div
                             className="relative flex items-center w-full px-4 cursor-pointer"
                             onClick={() => {

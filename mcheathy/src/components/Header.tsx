@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { Suspense } from "react";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -21,6 +21,7 @@ import HeaderSkeleton from "./skeleton/HeaderSkeleton";
 function Header() {
     const pathName = usePathname();
     const { setTheme } = useTheme();
+    const router = useRouter();
     const currentUserID = useCurrentUserStore((state) => state.id);
     const accessToken = useTokenStorage((state) => state.accessToken);
     const { data: user, error } = useFetchData<User>(
@@ -103,6 +104,18 @@ function Header() {
                                     My Appointments
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
+                                {user.role === "admin" && (
+                                    <>
+                                        <DropdownMenuItem
+                                            onClick={() => {
+                                                router.push("admin/dashboard");
+                                            }}
+                                        >
+                                            Admin
+                                        </DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                    </>
+                                )}
 
                                 <DropdownMenuItem>Log out</DropdownMenuItem>
                             </DropdownMenuContent>
