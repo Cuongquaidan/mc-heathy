@@ -11,6 +11,9 @@ import { MdOutlineCancel } from "react-icons/md";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useFetchData from "@/hooks/useFetchData";
 import { Appointment } from "@/lib/interface";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -26,8 +29,21 @@ import { useTokenStorage } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { Pagination } from "antd";
 import type { PaginationProps } from "antd";
-import { Button } from "../ui/button";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+const formSchema = z.object({
+    search: z.string().min(0, {
+        message: "Please type search text",
+    }),
+});
 
 function TableAppointments() {
     const accessToken = useTokenStorage((state) => state.accessToken);
@@ -77,9 +93,46 @@ function TableAppointments() {
         setPage(pageNumber);
         setLimit(10);
     };
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            search: "",
+        },
+    });
+    function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log(values);
+    }
     if (error) return <div>{error}</div>;
     return (
         <div className="p-10">
+            <div className="p-5">
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="flex gap-10 mx-auto w-[1000px] max-w-[100%] pb-10"
+                    >
+                        <div className="flex-1">
+                            <FormField
+                                control={form.control}
+                                name="search"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="Type patient phone"
+                                                {...field}
+                                            />
+                                        </FormControl>
+
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                        <Button type="submit">Search</Button>
+                    </form>
+                </Form>
+            </div>
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -137,7 +190,7 @@ function TableAppointments() {
                                     <AlertDialogTrigger asChild>
                                         <MdOutlineCancel
                                             size={40}
-                                            className="p-1 text-red-600 bg-red-300 rounded-full"
+                                            className="p-1 text-red-600 rounded-full"
                                         />
                                     </AlertDialogTrigger>
                                     <AlertDialogContent>

@@ -52,35 +52,39 @@ function SlideBar() {
     ];
 
     return (
-        <div className="flex flex-col justify-between min-h-screen p-5 border-r-2">
-            <div>
-                <h1 className="text-5xl font-bold cursor-pointer">MCHeathy</h1>
-                <ul className="flex flex-col items-start flex-1 gap-8 mt-16">
-                    {menuItems.map((item) => (
-                        <SliderBarItem
-                            key={item.name}
-                            name={item.name}
-                            url={item.url}
-                            icon={item.icon}
-                        />
-                    ))}
-                    <div
-                        className="relative flex items-center w-full px-4 cursor-pointer"
-                        onClick={() => {
-                            setTheme(theme === "dark" ? "light" : "dark");
-                        }}
-                    >
-                        <SunIcon className="absolute flex-1 w-10 h-10 transition-all scale-100 rotate-0 -translate-y-1/2 dark:-rotate-90 dark:scale-0 top-1/2" />
-                        <MoonIcon className="absolute flex-1 w-10 h-10 transition-all scale-0 rotate-90 -translate-y-1/2 top-1/2 dark:rotate-0 dark:scale-100" />
-                        <p className="text-xl px-14 text-primaryGray">
-                            {theme === "dark" ? "Dark mode" : "Light mode"}
-                        </p>
-                    </div>
-                </ul>
-            </div>
-            <div className="flex flex-col items-center gap-5 p-5 mt-10 text-xl text-center text-primaryGray">
-                {user?.name} ({user?.role}){" "}
-                <Button className="w-full">Logout</Button>
+        <div className="flex flex-col justify-between h-screen">
+            <div className="fixed flex flex-col justify-between h-screen p-5 border-r-2 ">
+                <div>
+                    <h1 className="text-5xl font-bold cursor-pointer">
+                        MCHeathy
+                    </h1>
+                    <ul className="flex flex-col items-start flex-1 gap-8 mt-16">
+                        {menuItems.map((item) => (
+                            <SliderBarItem
+                                key={item.name}
+                                name={item.name}
+                                url={item.url}
+                                icon={item.icon}
+                            />
+                        ))}
+                        <div
+                            className="relative flex items-center w-full px-4 cursor-pointer"
+                            onClick={() => {
+                                setTheme(theme === "dark" ? "light" : "dark");
+                            }}
+                        >
+                            <SunIcon className="absolute flex-1 w-10 h-10 transition-all scale-100 rotate-0 -translate-y-1/2 dark:-rotate-90 dark:scale-0 top-1/2" />
+                            <MoonIcon className="absolute flex-1 w-10 h-10 transition-all scale-0 rotate-90 -translate-y-1/2 top-1/2 dark:rotate-0 dark:scale-100" />
+                            <p className="text-xl px-14 text-primaryGray">
+                                {theme === "dark" ? "Dark mode" : "Light mode"}
+                            </p>
+                        </div>
+                    </ul>
+                </div>
+                <div className="flex flex-col items-center gap-5 p-5 mt-10 text-xl text-center text-primaryGray">
+                    {user?.name} ({user?.role}){" "}
+                    <Button className="w-full">Logout</Button>
+                </div>
             </div>
         </div>
     );
