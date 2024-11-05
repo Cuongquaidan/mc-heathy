@@ -7,7 +7,6 @@ function AdminPage() {
     return (
         <div className="p-10">
             <NumberOfDoctors></NumberOfDoctors>
-
             <NumberOfSpecialitys></NumberOfSpecialitys>
             <ChartMixedSpecielWithDoctor></ChartMixedSpecielWithDoctor>
         </div>
