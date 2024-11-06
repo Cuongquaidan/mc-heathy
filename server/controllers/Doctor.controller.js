@@ -32,6 +32,15 @@ export async function getDoctorById(req, res) {
 export async function AddDoctor(req, res) {
     await connect();
     try {
+        const existingDoctor = await DoctorModel.findOne({
+            email: req.body.email,
+        });
+        if (existingDoctor) {
+            return res.status(400).json({
+                message: "Email already exists. Please use a different email.",
+            });
+        }
+
         const newDoctor = new DoctorModel({ ...req.body });
         await newDoctor.save();
         const { password, ...doctorNoPass } = newDoctor;

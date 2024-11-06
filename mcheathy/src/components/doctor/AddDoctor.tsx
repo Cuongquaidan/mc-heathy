@@ -100,10 +100,11 @@ function AddDoctor() {
                     body: JSON.stringify(formValues),
                 }
             );
+            const result = await response.json();
             if (!response.ok) {
                 toast({
                     title: "Add failed",
-                    description: "",
+                    description: result.message || "",
                     duration: 2000,
                     style: { backgroundColor: "red", color: "white" },
                 });
