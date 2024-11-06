@@ -78,7 +78,7 @@ export async function getAvailableDoctorsByDate(req, res) {
         return res.status(200).json(filteredDoctors);
     } catch (error) {
         return res
-            .status(404)
+            .status(500)
             .send({ error: "Cannot Find Available Doctors Data" });
     }
 }
@@ -97,7 +97,7 @@ export async function getDoctorsBySpeciality(req, res) {
         return res.status(200).json(filteredDoctors);
     } catch (error) {
         return res
-            .status(404)
+            .status(500)
             .send({ error: "Cannot find doctors by speciality" });
     }
 }
@@ -128,6 +128,31 @@ export async function updateDoctor(req, res) {
 
         return res.status(200).json(updatedDoctor);
     } catch (error) {
-        return res.status(404).send({ error: error.toString() });
+        return res.status(500).send({ error: error.toString() });
+    }
+}
+export async function deleteDoctor(req, res) {
+    await connect();
+    try {
+        const role = req.user.role;
+        if (role !== "admin") {
+            return res
+                .status(403)
+                .send("You don't have permission to delete doctors");
+        }
+
+        const doctorId = req.query.doctorId;
+        const deletedDoctor = await DoctorModel.findByIdAndDelete(doctorId);
+
+        if (!deletedDoctor) {
+            return res.status(404).send({ message: "Doctor not found" });
+        }
+
+        return res.status(200).json({
+            message: "Doctor deleted successfully",
+            doctorId: doctorId,
+        });
+    } catch (error) {
+        return res.status(500).send({ error: error.toString() });
     }
 }

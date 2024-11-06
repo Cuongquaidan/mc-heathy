@@ -18,5 +18,8 @@ router
 router
     .route("/getDoctorsBySpeciality")
     .get(verifyAccessToken, doctorControllers.getDoctorsBySpeciality);
+router
+    .route("/deleteDoctor")
+    .delete(verifyAccessToken, doctorControllers.deleteDoctor);
 
 export default router;
