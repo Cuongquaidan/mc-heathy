@@ -64,6 +64,22 @@ export async function addAppointment(req, res) {
     await connect();
     try {
         const newAppointment = new AppointmentModel({ ...req.body });
+        const appointmentDate = new Date(newAppointment.dateTime);
+        appointmentDate.setHours(0, 0, 0, 0);
+        const existingAppointment = await AppointmentModel.findOne({
+            doctorId: newAppointment.doctorId,
+            dateTime: {
+                $gte: appointmentDate,
+                $lt: new Date(appointmentDate.getTime() + 24 * 60 * 60 * 1000),
+            },
+        });
+
+        if (existingAppointment) {
+            return res
+                .status(409)
+                .send({ message: "Appointment already exists for this date." });
+        }
+
         await newAppointment.save();
         return res.status(200).json({
             message: "Add appointment successfully",
