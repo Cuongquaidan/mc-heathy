@@ -13,6 +13,7 @@ import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import Back from "./icons/Back";
 import { useRouter } from "next/navigation";
+import TopicIcon from "./icons/TopicIcon";
 
 interface MenuItem {
     name: string;
@@ -52,6 +53,11 @@ function SlideBar() {
             name: "Appointments",
             url: "/admin/appointments",
             icon: <MdEditCalendar />,
+        },
+        {
+            name: "Topics",
+            url: "/admin/topics",
+            icon: <TopicIcon />,
         },
     ];
 
