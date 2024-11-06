@@ -99,12 +99,18 @@ function Header() {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
 
-                                <DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => router.push("/profile")}
+                                >
                                     Update Profile
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
 
-                                <DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => {
+                                        router.push("/my-appointments");
+                                    }}
+                                >
                                     My Appointments
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />

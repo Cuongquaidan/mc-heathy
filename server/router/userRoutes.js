@@ -7,4 +7,8 @@ router
     .route("/getUserByID")
     .get(verifyAccessToken, userControllers.getUserByID);
 
+router
+    .route("/updateUserProfile")
+    .patch(verifyAccessToken, userControllers.updateProfile);
+
 export default router;
