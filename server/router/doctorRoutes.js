@@ -10,6 +10,9 @@ router
     .get(verifyAccessToken, doctorControllers.getDoctorById);
 router.route("/addDoctor").post(doctorControllers.AddDoctor);
 router
+    .route("/updateDoctor")
+    .patch(verifyAccessToken, doctorControllers.updateDoctor);
+router
     .route("/getAvailableDoctorsByDate")
     .get(verifyAccessToken, doctorControllers.getAvailableDoctorsByDate);
 router

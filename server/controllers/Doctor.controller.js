@@ -34,13 +34,13 @@ export async function AddDoctor(req, res) {
     try {
         const newDoctor = new DoctorModel({ ...req.body });
         await newDoctor.save();
-        const doctor = { password, ...newDoctor };
-        res.status(201).json({
+        const { password, ...doctorNoPass } = newDoctor;
+        return res.status(201).json({
             message: "Doctor added successfully",
-            doctor: doctor,
+            doctor: doctorNoPass,
         });
     } catch (error) {
-        return res.status(500).send({ error: "Error adding doctor" });
+        return res.status(500).send({ error: error.toString() });
     }
 }
 
@@ -99,5 +99,35 @@ export async function getDoctorsBySpeciality(req, res) {
         return res
             .status(404)
             .send({ error: "Cannot find doctors by speciality" });
+    }
+}
+export async function updateDoctor(req, res) {
+    await connect();
+    try {
+        const role = req.user.role;
+        if (role !== "admin") {
+            return res.status(403).send("Can't update doctor");
+        }
+        const doctorId = req.query.doctorId;
+        const { name, phone, avatar, dob, speciality, address, fees } =
+            req.body;
+
+        const updatedDoctor = await DoctorModel.findByIdAndUpdate(doctorId, {
+            name,
+            phone,
+            avatar,
+            dob,
+            speciality,
+            address,
+            fees,
+        }).lean();
+
+        if (!updatedDoctor) {
+            return res.status(404).send({ doctorId });
+        }
+
+        return res.status(200).json(updatedDoctor);
+    } catch (error) {
+        return res.status(404).send({ error: error.toString() });
     }
 }
