@@ -18,6 +18,14 @@ export interface Speciality {
     name: string;
     slug: string;
 }
+export interface Topic {
+    _id: string;
+    thumb: string;
+    title: string;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
 export interface User {
     _id: string;
     name: string;

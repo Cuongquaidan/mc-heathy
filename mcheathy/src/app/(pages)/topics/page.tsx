@@ -1,13 +1,13 @@
-import TopicsListAdmin from "@/components/topics/TopicsListAdmin";
+import TopicsList from "@/components/topics/TopicsList";
 import React from "react";
 
 function TopicsPage() {
     return (
-        <div className="p-10">
+        <div className="p-10 py-20 mb-20">
             <h2 className="py-5 mb-10 text-3xl italic font-bold underline">
-                Manage topics
+                Newest topics
             </h2>
-            <TopicsListAdmin></TopicsListAdmin>
+            <TopicsList></TopicsList>
         </div>
     );
 }

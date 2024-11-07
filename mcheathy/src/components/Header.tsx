@@ -83,6 +83,16 @@ function Header() {
                     >
                         CONTACT
                     </Link>
+                    <Link
+                        href={"/topics"}
+                        className={
+                            pathName == "/topics"
+                                ? "border-b-textBlue border-b-4 dark:border-b-slate-500"
+                                : ""
+                        }
+                    >
+                        TOPICS
+                    </Link>
                 </div>
                 <div className="flex items-center gap-4">
                     {user ? (
