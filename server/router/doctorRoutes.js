@@ -21,5 +21,6 @@ router
 router
     .route("/deleteDoctor")
     .delete(verifyAccessToken, doctorControllers.deleteDoctor);
+router.route("/login").post(doctorControllers.login);
 
 export default router;

@@ -9,8 +9,21 @@ router
     .route("/getByDoctorId")
     .get(verifyAccessToken, appointmentControllers.getAppointmentByDoctorId);
 router
+    .route("/getByDoctorIdPagination")
+    .get(
+        verifyAccessToken,
+        appointmentControllers.getAppointmentByDoctorIdPagination
+    );
+router
     .route("/getAppointmentByUserId")
     .get(verifyAccessToken, appointmentControllers.getAppointmentByUserId);
+
+router
+    .route("/getAppointmentInNext3DaysByDoctorId")
+    .get(
+        verifyAccessToken,
+        appointmentControllers.getAppointmentInNext3DaysByDoctorId
+    );
 router.route("/addAppointment").post(appointmentControllers.addAppointment);
 router.route("/:id").delete(appointmentControllers.deleteAppointment);
 

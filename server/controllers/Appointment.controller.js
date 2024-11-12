@@ -22,21 +22,6 @@ export async function get(req, res) {
     }
 }
 
-export async function getAppointmentByDoctorId(req, res) {
-    await connect();
-    try {
-        const doctorId = req.query.doctorId;
-        const appointmentsList = await AppointmentModel.find({
-            doctorId: doctorId,
-        })
-            .select("dateTime")
-            .lean();
-
-        return res.status(200).json(appointmentsList);
-    } catch (error) {
-        return res.status(404).send({ error: "Cannot Find Appointments Data" });
-    }
-}
 export async function getAppointmentByUserId(req, res) {
     await connect();
     try {
@@ -105,5 +90,85 @@ export async function deleteAppointment(req, res) {
         });
     } catch (error) {
         return res.status(500).send({ error: "Error deleting appointment" });
+    }
+}
+
+// Get all appointments by doctorId with pagination
+export async function getAppointmentByDoctorIdPagination(req, res) {
+    await connect();
+    try {
+        const doctorId = req.user.id;
+        const page = parseInt(req.query.page) || 1; // Default to page 1
+        const limit = parseInt(req.query.limit) || 10; // Default to 10 per page
+        const offset = (page - 1) * limit;
+
+        // Get total count for pagination
+        const total = await AppointmentModel.find({
+            doctorId,
+        }).countDocuments();
+
+        // Fetch paginated appointments
+        const appointmentsList = await AppointmentModel.find({ doctorId })
+            .skip(offset)
+            .limit(limit)
+            .sort({ dateTime: 1 }) // Optional sorting
+
+            .lean();
+
+        return res.status(200).json({ appointmentsList, total });
+    } catch (error) {
+        return res.status(404).send({ error: "Cannot Find Appointments Data" });
+    }
+}
+
+// Get upcoming appointments by doctorId in the next 3 days with pagination
+export async function getAppointmentInNext3DaysByDoctorId(req, res) {
+    await connect();
+    try {
+        const doctorId = req.user.id;
+        const page = parseInt(req.query.page) || 1; // Default to page 1
+        const limit = parseInt(req.query.limit) || 10; // Default to 10 per page
+        const offset = (page - 1) * limit;
+
+        // Define date range for the next 3 days
+        const today = new Date();
+        const threeDaysFromNow = new Date();
+        threeDaysFromNow.setDate(today.getDate() + 3);
+
+        // Get total count for appointments in the next 3 days
+        const total = await AppointmentModel.find({
+            doctorId,
+            dateTime: { $gte: today, $lte: threeDaysFromNow },
+        }).countDocuments();
+
+        // Fetch paginated upcoming appointments in the next 3 days
+        const appointmentsList = await AppointmentModel.find({
+            doctorId,
+            dateTime: { $gte: today, $lte: threeDaysFromNow },
+        })
+            .skip(offset)
+            .limit(limit)
+            .sort({ dateTime: 1 }) // Sort by date from nearest to farthest
+
+            .lean();
+
+        return res.status(200).json({ appointmentsList, total });
+    } catch (error) {
+        return res.status(404).send({ error: "Cannot Find Appointments Data" });
+    }
+}
+export async function getAppointmentByDoctorId(req, res) {
+    await connect();
+    try {
+        const doctorId = req.query.doctorId;
+        const appointmentsList = await AppointmentModel.find({
+            doctorId: doctorId,
+        })
+            .select("dateTime")
+            .lean();
+
+        return res.status(200).json(appointmentsList);
+    } catch (error) {
+        return res.status(404).send({ error: "Cannot Find Appointments Data" });
     }
 }

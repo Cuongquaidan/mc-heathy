@@ -307,7 +307,7 @@ function RegisterPage() {
                 </Button>
                 <div className="flex gap-2">
                     <p>You already have an account? </p>
-                    <Link href={"/log-in"} className="text-textBlue ">
+                    <Link href={"/login"} className="text-textBlue ">
                         Login here
                     </Link>
                 </div>

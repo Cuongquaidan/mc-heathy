@@ -1,4 +1,5 @@
 import connect from "../database/conn.js";
+import { createAccessToken, createRefreshToken } from "../jwt/jwt.js";
 import AppointmentModel from "../models/Appointment.model.js";
 import DoctorModel from "../models/Doctor.model.js";
 
@@ -20,7 +21,7 @@ export async function getDoctorById(req, res) {
         const doctorId = req.query.doctorId;
         const doctor = await DoctorModel.findById(doctorId).lean();
         if (!doctor) {
-            return res.status(404).send({ error: "Doctor not found" });
+            return res.status(404).send({ error: doctorId });
         }
         const { password, ...doctorNoPass } = doctor;
         return res.status(200).json(doctorNoPass);
@@ -163,5 +164,35 @@ export async function deleteDoctor(req, res) {
         });
     } catch (error) {
         return res.status(500).send({ error: error.toString() });
+    }
+}
+export async function login(req, res) {
+    await connect();
+    try {
+        const { email, password } = req.body;
+
+        // Find doctor by email and password
+        const doctor = await DoctorModel.findOne({ email, password });
+
+        // If doctor is not found
+        if (!doctor) {
+            return res
+                .status(404)
+                .send({ error: "Email or password is incorrect" });
+        }
+
+        // Create tokens
+        const accessToken = createAccessToken(doctor);
+        const refreshToken = createRefreshToken(doctor);
+
+        // Send response with tokens
+        return res.status(200).send({
+            message: "Login Successful...!",
+            doctorEmail: doctor.email,
+            accessToken,
+            refreshToken,
+        });
+    } catch (error) {
+        return res.status(500).send({ error: "Internal Server Error" });
     }
 }
