@@ -84,7 +84,7 @@ function LoginPage() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8 max-w-screen w-[600px] border-textBlue border p-10 mx-auto mt-52 rounded-lg"
+                    className="space-y-8 max-w-screen w-[600px] border-textBlue border p-10 mx-auto mt-52 rounded-lg "
                 >
                     <div>
                         <h2 className="py-2 text-3xl font-bold text-textBlue">

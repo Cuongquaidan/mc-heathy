@@ -57,3 +57,13 @@ h5 {
 .dark .anticon {
     color: #ccc;
 }
+.react-chatbot-kit-chat-container {
+    width: 600px !important;
+    color: black !important;
+}
+.react-chatbot-kit-chat-bot-message {
+    margin-left: 0 !important;
+}
+.react-chatbot-kit-chat-input {
+    background-color: white !important;
+}

@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import { AuthorizeUserRoute } from "@/middleware/auth";
 import React, { ReactNode } from "react";
-
+import ChatBot from "@/chatbot/Chat";
 function PageLayout({ children }: { children: ReactNode }) {
     return (
         <AuthorizeUserRoute>
@@ -17,6 +17,7 @@ function PageLayout({ children }: { children: ReactNode }) {
                 <Header></Header>
                 {children}
                 <Footer></Footer>
+                <ChatBot></ChatBot>
             </ThemeProvider>
         </AuthorizeUserRoute>
     );

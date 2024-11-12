@@ -1,10 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useUnresgisterStore } from "@/store/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 function OTPPage() {
     const router = useRouter();
     const email = useUnresgisterStore((state) => state.email);
@@ -15,6 +16,10 @@ function OTPPage() {
     const phone = useUnresgisterStore((state) => state.phone);
     const avatar = useUnresgisterStore((state) => state.avatar);
     const [otpInput, setOtpInput] = useState<string>("");
+
+    // Tạo ref để lưu trạng thái gửi OTP
+    const otpSent = useRef(false);
+
     const handleVerify = async () => {
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/auth/register/verify-otp/${otpInput}`
@@ -23,6 +28,7 @@ function OTPPage() {
         const data = await response.json();
         return data;
     };
+
     const handleSendOTP = async () => {
         try {
             const response = await fetch(
@@ -48,6 +54,7 @@ function OTPPage() {
             console.log(error);
         }
     };
+
     const register = async () => {
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
@@ -73,9 +80,15 @@ function OTPPage() {
         if (data.message === "User created successfully")
             router.push(`/login?message=${encodeURIComponent(data.message)}`);
     };
+
     useEffect(() => {
-        handleSendOTP();
+        // Kiểm tra email và biến otpSent trước khi gửi OTP
+        if (email && !otpSent.current) {
+            handleSendOTP();
+            otpSent.current = true; // Đặt cờ là đã gửi
+        }
     }, [email]);
+
     if (!email)
         return (
             <div>
@@ -107,7 +120,7 @@ function OTPPage() {
                 </Button>
                 <Button
                     className="p-6 hover:bg-yellow-300 min-w-[150px] text-lg text-black bg-yellow-500"
-                    onClick={() => handleSendOTP()}
+                    onClick={async () => await handleSendOTP()}
                 >
                     Resend OTP
                 </Button>
