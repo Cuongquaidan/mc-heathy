@@ -7,6 +7,7 @@ import authRoutes from "./authRoutes.js";
 import userRoutes from "./userRoutes.js";
 import topicRoutes from "./topicRoutes.js";
 import chatRoutes from "./chatRoutes.js";
+import messageRoutes from "./messageRoutes.js";
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/topics", topicRoutes);
 router.use("/chats", chatRoutes);
+router.use("/messages", messageRoutes);
 
 export default router;

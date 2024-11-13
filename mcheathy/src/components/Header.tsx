@@ -31,6 +31,7 @@ function Header() {
         "Fetch data failed",
         accessToken || " "
     );
+    if (error === "Access token has expired") router.push("/login");
     if (error) return <div>{error}</div>;
 
     return (
