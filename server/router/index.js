@@ -6,6 +6,7 @@ import appointmentRoutes from "./appointmentRoutes.js";
 import authRoutes from "./authRoutes.js";
 import userRoutes from "./userRoutes.js";
 import topicRoutes from "./topicRoutes.js";
+import chatRoutes from "./chatRoutes.js";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/appointments", appointmentRoutes);
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/topics", topicRoutes);
+router.use("/chats", chatRoutes);
 
 export default router;
