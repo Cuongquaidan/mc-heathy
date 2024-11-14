@@ -31,7 +31,7 @@ function HeaderDoctor() {
         "Fetch data failed",
         accessToken || " "
     );
-    if (error) router.push("/login");
+    if (error) router.push("/doctor-login");
 
     return (
         <Suspense fallback={<HeaderSkeleton />}>
@@ -83,7 +83,7 @@ function HeaderDoctor() {
                                 <DropdownMenuItem
                                     onClick={() => {
                                         logout();
-                                        router.push("/login");
+                                        router.push("/doctor-login");
                                     }}
                                 >
                                     Log out

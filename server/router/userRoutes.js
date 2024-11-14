@@ -6,6 +6,9 @@ const router = Router();
 router
     .route("/getUserByID")
     .get(verifyAccessToken, userControllers.getUserByID);
+router
+    .route("/getUserByQueryID")
+    .get(verifyAccessToken, userControllers.getUserByQueryID);
 
 router
     .route("/updateUserProfile")

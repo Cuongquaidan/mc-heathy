@@ -21,7 +21,7 @@ function ChatBox({ type }: { type: string }) {
 
     const { data: recipienter } = useFetchData<typeFetchRecipienter>(
         type === "User"
-            ? `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${recipientId}`
+            ? `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByQueryID?userId=${recipientId}`
             : `${process.env.NEXT_PUBLIC_API_URL}/doctors/getDoctorByID?doctorId=${recipientId}`,
         "Fetch data failed",
         accessToken || " "
@@ -112,7 +112,7 @@ function ChatBox({ type }: { type: string }) {
                         Select someone
                     </div>
                 )}
-                {recipientId && (
+                {recipientId && messages?.length == 0 && (
                     <div className="text-center">
                         Chat with {recipienter?.name}
                     </div>

@@ -14,11 +14,12 @@ function ChatAvatar({ id, type }: { id: string; type: string }) {
     const { setRecipientId } = useChatContext();
     const { data, error } = useFetchData<typeFetchAvatar>(
         type === "User"
-            ? `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${id}`
+            ? `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByQueryID?userId=${id}`
             : `${process.env.NEXT_PUBLIC_API_URL}/doctors/getDoctorByID?doctorId=${id}`,
         "Fetch data failed",
         accessToken || " "
     );
+    console.log(data);
     if (error) return <div className="hidden">{error}</div>;
     return (
         <div
