@@ -11,7 +11,7 @@ function ChatAvatar({ id, type }: { id: string; type: string }) {
     type typeFetchAvatar = Doctor | User;
 
     const accessToken = useTokenStorage((item) => item.accessToken);
-    const { setRecipientId } = useChatContext();
+    const { setRecipientId, onlineUsers } = useChatContext();
     const { data, error } = useFetchData<typeFetchAvatar>(
         type === "User"
             ? `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByQueryID?userId=${id}`
@@ -35,7 +35,9 @@ function ChatAvatar({ id, type }: { id: string; type: string }) {
                 <AvatarImage src={data?.avatar}></AvatarImage>
                 <AvatarFallback>{data?.name}</AvatarFallback>
             </Avatar>
-            <div className="absolute bottom-0 right-0 z-40 w-4 h-4 bg-green-500 rounded-full"></div>
+            {onlineUsers.some((item) => item.userId === data?._id) && (
+                <div className="absolute bottom-0 right-0 z-40 w-4 h-4 bg-green-500 rounded-full"></div>
+            )}
         </div>
     );
 }

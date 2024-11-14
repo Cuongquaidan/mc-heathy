@@ -13,7 +13,8 @@ import { useTheme } from "next-themes";
 import { toast } from "react-toastify";
 import { ScrollArea } from "../ui/scroll-area";
 function ChatBox({ type }: { type: string }) {
-    const { recipientId } = useChatContext();
+    const { recipientId, setMessage, currentChat, messages, setMessages } =
+        useChatContext();
     const { theme } = useTheme();
     const currentUserID = useCurrentUserStore((state) => state.id);
     const accessToken = useTokenStorage((state) => state.accessToken);
@@ -25,16 +26,6 @@ function ChatBox({ type }: { type: string }) {
             : `${process.env.NEXT_PUBLIC_API_URL}/doctors/getDoctorByID?doctorId=${recipientId}`,
         "Fetch data failed",
         accessToken || " "
-    );
-    const { data: chat } = useFetchData<Chat>(
-        `${process.env.NEXT_PUBLIC_API_URL}/chats/find/${currentUserID}/${recipientId}`,
-        "Fetch chat failed",
-        accessToken || ""
-    );
-    const { data: messages } = useFetchData<Message[]>(
-        `${process.env.NEXT_PUBLIC_API_URL}/messages/${chat?._id}`,
-        "Fetch messages failed",
-        accessToken || ""
     );
 
     const formSchema = z.object({
@@ -49,23 +40,30 @@ function ChatBox({ type }: { type: string }) {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log(currentChat);
         if (values.text === "") return;
         console.log(values);
         try {
-            const response = fetch(
+            const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/messages`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        chatId: chat?._id,
+                        chatId: currentChat?._id,
                         text: values.text,
                         senderId: currentUserID,
                     }),
                 }
             );
-            if (!response) toast.error("Create message failed");
+            if (!response) {
+                toast.error("Create message failed");
+                throw new Error("Failed");
+            }
+            const resjson = await response.json();
+            setMessage(resjson);
+            setMessages([...messages, resjson]);
             form.reset();
         } catch (error) {
             toast.error(String(error));
