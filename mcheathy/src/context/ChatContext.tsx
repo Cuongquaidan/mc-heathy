@@ -11,17 +11,22 @@ const ChatContext = createContext<{
     setShowChat: (value: boolean) => void;
     currentChats: Chat[];
     setCurrentChats: (value: Chat[]) => void;
+    recipientId: string;
+    setRecipientId: (value: string) => void;
 }>({
     showChat: false,
     setShowChat: () => {}, // No-op function for default value
     currentChats: [], // Default is an empty array
     setCurrentChats: () => {}, // No-op function for default value
+    recipientId: "",
+    setRecipientId: () => {},
 });
 
 // Provider component to wrap around consumers
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     const [showChat, setShowChat] = useState(false);
     const [currentChats, setCurrentChats] = useState<Chat[]>([]);
+    const [recipientId, setRecipientId] = useState<string>("");
     const accessToken = useTokenStorage((state) => state.accessToken);
     const currentUserID = useCurrentUserStore((state) => state.id);
     const { data: chats } = useFetchData<Chat[]>(
@@ -36,7 +41,14 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     }, [chats]);
     return (
         <ChatContext.Provider
-            value={{ showChat, setShowChat, currentChats, setCurrentChats }}
+            value={{
+                showChat,
+                setShowChat,
+                currentChats,
+                setCurrentChats,
+                recipientId,
+                setRecipientId,
+            }}
         >
             {children}
         </ChatContext.Provider>

@@ -5,12 +5,13 @@ import React from "react";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Doctor, User } from "@/lib/interface";
+import { useChatContext } from "@/context/ChatContext";
 
 function ChatAvatar({ id, type }: { id: string; type: string }) {
     type typeFetchAvatar = Doctor | User;
 
     const accessToken = useTokenStorage((item) => item.accessToken);
-
+    const { setRecipientId } = useChatContext();
     const { data, error } = useFetchData<typeFetchAvatar>(
         type === "User"
             ? `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${id}`
@@ -20,7 +21,10 @@ function ChatAvatar({ id, type }: { id: string; type: string }) {
     );
     if (error) return <div className="hidden">{error}</div>;
     return (
-        <div className="relative w-[60px] h-[60px] mr-8">
+        <div
+            className="relative w-[60px] h-[60px] mr-8 cursor-pointer"
+            onClick={() => setRecipientId(id)}
+        >
             <Avatar
                 style={{
                     width: "60px",

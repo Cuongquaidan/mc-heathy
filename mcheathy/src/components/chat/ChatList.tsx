@@ -4,6 +4,7 @@ import { useChatContext } from "@/context/ChatContext";
 import { useCurrentUserStore } from "@/store/store";
 import ChatAvatar from "./ChatAvatar";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import ChatBox from "./ChatBox";
 
 function ChatList() {
     const { showChat, setShowChat, currentChats } = useChatContext();
@@ -13,7 +14,7 @@ function ChatList() {
     return (
         <div className="fixed -translate-y-1/2 select-none top-1/2 left-10">
             {showChat ? (
-                <div className="bg-white text-primaryGray dark:bg-darkBackground dark:text-darkTextPrimary  rounded-xl w-[400px] h-[600px] border border-gray-500">
+                <div className="flex flex-col bg-white text-primaryGray dark:bg-darkBackground dark:text-darkTextPrimary  rounded-xl w-[400px] h-[600px] border border-gray-500">
                     <div className="flex justify-end">
                         <div
                             className="p-4 font-bold text-white bg-red-500 cursor-pointer rounded-tr-xl rounded-bl-xl"
@@ -45,6 +46,7 @@ function ChatList() {
                         </div>
                         <ScrollBar className="mt-5" orientation="horizontal" />
                     </ScrollArea>
+                    <ChatBox type="Doctor"></ChatBox>
                 </div>
             ) : (
                 <div
