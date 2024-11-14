@@ -31,8 +31,8 @@ function Header() {
         "Fetch data failed",
         accessToken || " "
     );
-    if (error === "Access token has expired") router.push("/login");
-    if (error) return <div>{error}</div>;
+
+    if (error) router.push("/login");
 
     return (
         <Suspense fallback={<HeaderSkeleton />}>

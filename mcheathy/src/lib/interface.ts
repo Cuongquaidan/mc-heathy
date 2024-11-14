@@ -38,15 +38,29 @@ export interface User {
 }
 
 export interface Appointment {
-    userId: Types.ObjectId;
+    userId: string;
     dateTime: Date;
-    doctorId: Types.ObjectId;
+    doctorId: string;
     doctorName: string;
     userName: string;
     doctorPhone: string;
     userPhone: string;
     doctorAvatar: string;
-    userAvatar: string; // Thêm trường userAvatar
+    userAvatar: string;
     fees: string;
     _id: string;
+}
+
+export interface Chat {
+    _id: string;
+    members: Array<string>;
+}
+
+export interface Message {
+    _id: string;
+    chatId: string;
+    senderId: string;
+    text: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

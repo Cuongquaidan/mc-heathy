@@ -103,6 +103,11 @@ function TableAppointmentsDoctor() {
                                     }
                                 )}
                             </TableCell>
+                            <TableCell>
+                                <div className="p-2 font-bold text-center bg-green-500 cursor-pointer">
+                                    Chat
+                                </div>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -1,3 +1,4 @@
+"use client";
 import { useTokenStorage } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -44,6 +45,7 @@ const useFetchData = <T,>(
                 // }
 
                 if (!response.ok) throw new Error(errorMessage);
+
                 const fetchedData: T = await response.json();
                 setData(fetchedData);
             } catch (err) {

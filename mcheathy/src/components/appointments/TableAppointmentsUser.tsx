@@ -17,11 +17,14 @@ import { Pagination } from "antd";
 import type { PaginationProps } from "antd";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
+import { useChatContext } from "@/context/ChatContext";
 
 function TableAppointmentsUser() {
     const accessToken = useTokenStorage((state) => state.accessToken);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
+    const { setShowChat, setCurrentChats, currentChats } = useChatContext();
     const [appointmentsList, setAppointmentsList] = useState<
         Appointment[] | undefined
     >(undefined);
@@ -35,6 +38,36 @@ function TableAppointmentsUser() {
         "Fetch data failed",
         accessToken || " "
     );
+    const handleAddChat = async (firstId: string, secondId: string) => {
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/chats/`,
+                {
+                    method: "POST",
+                    body: JSON.stringify({ firstId, secondId }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: accessToken || "Bear ",
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to add chat");
+            }
+            const resjson = await response.json();
+            const chatExists = currentChats.some(
+                (chat) => chat._id === resjson._id
+            );
+
+            if (!chatExists) {
+                setCurrentChats([...currentChats, resjson]);
+            }
+        } catch (error) {
+            toast.error(String(error));
+        }
+    };
+
     useEffect(() => {
         setAppointmentsList(data?.appointmentsList);
         setTotal(data?.total ?? 0);
@@ -102,6 +135,21 @@ function TableAppointmentsUser() {
                                         hour12: true,
                                     }
                                 )}
+                            </TableCell>
+                            <TableCell>
+                                <div
+                                    className="p-2 font-bold text-center bg-green-500 cursor-pointer"
+                                    onClick={() => {
+                                        handleAddChat(
+                                            item.userId,
+                                            item.doctorId
+                                        );
+
+                                        setShowChat(true);
+                                    }}
+                                >
+                                    Chat
+                                </div>
                             </TableCell>
                         </TableRow>
                     ))}

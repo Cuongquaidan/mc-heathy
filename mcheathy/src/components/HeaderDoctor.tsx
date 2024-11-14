@@ -31,7 +31,7 @@ function HeaderDoctor() {
         "Fetch data failed",
         accessToken || " "
     );
-    if (error) return <div>{error}</div>;
+    if (error) router.push("/login");
 
     return (
         <Suspense fallback={<HeaderSkeleton />}>
