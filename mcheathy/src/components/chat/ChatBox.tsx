@@ -3,7 +3,7 @@ import { useChatContext } from "@/context/ChatContext";
 import useFetchData from "@/hooks/useFetchData";
 import { Chat, Doctor, Message, User } from "@/lib/interface";
 import { useCurrentUserStore, useTokenStorage } from "@/store/store";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FormControl, FormField, FormItem, Form } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -69,6 +69,17 @@ function ChatBox({ type }: { type: string }) {
             toast.error(String(error));
         }
     }
+    const lastMessageRef = useRef<HTMLDivElement | null>(null); // Tham chiếu đến tin nhắn cuối
+
+    useEffect(() => {
+        // Cuộn đến tin nhắn cuối cùng khi messages thay đổi
+        if (lastMessageRef.current) {
+            lastMessageRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "end",
+            });
+        }
+    }, [messages]);
     return (
         <div className="flex flex-col flex-1 w-full p-8 border-t-2 border-gray-500">
             <div className="flex-1">
@@ -81,6 +92,11 @@ function ChatBox({ type }: { type: string }) {
                             <div className="flex flex-col gap-4">
                                 {messages.map((item, index) => (
                                     <div
+                                        ref={
+                                            index === messages.length - 1
+                                                ? lastMessageRef
+                                                : null
+                                        }
                                         key={index}
                                         style={{
                                             backgroundColor:
