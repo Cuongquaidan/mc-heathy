@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import { Pagination, PaginationProps } from "antd";
 import { Button } from "../ui/button";
 import moment from "moment";
-import Link from "next/link";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 function TopicsList() {
@@ -64,13 +63,7 @@ function TopicsList() {
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-center justify-around gap-2">
-                                    <Button className="font-bold text-green-600 bg-green-200 hover:bg-green-100 dark:text-green-600 dark:bg-green-200 dark:hover:bg-green-100 hover:scale-110">
-                                        <Link
-                                            href={`update-doctor?doctorId=${item._id}`}
-                                        >
-                                            Update
-                                        </Link>
-                                    </Button>
+                                    
                                     <Button
                                         onClick={() => {
                                             Swal.fire({
@@ -87,7 +80,7 @@ function TopicsList() {
                                                     try {
                                                         const response =
                                                             await fetch(
-                                                                `${process.env.NEXT_PUBLIC_API_URL}/doctors/deleteDoctor?doctorId=${item._id}`,
+                                                                `${process.env.NEXT_PUBLIC_API_URL}/topics/deleteTopic?topicId=${item._id}`,
                                                                 {
                                                                     method: "DELETE",
                                                                     headers: {

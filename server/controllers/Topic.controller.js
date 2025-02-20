@@ -44,3 +44,29 @@ export async function getById(req, res) {
         return res.status(500).send(error);
     }
 }
+export async function deleteTopic(req, res) {
+    await connect();
+    try {
+        const topicId = req.query.topicId;
+        const topic = await TopicModel.findByIdAndDelete(topicId);
+        if (!topic) return res.status(404).send({ message: "Topic not found" });
+        return res.status(200).json({ message: "Topic deleted successfully" });
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+    
+}
+export async function updateTopic(req, res) {
+    await connect();
+    try {
+        const topicId = req.query.topicId;
+        const topic = await TopicModel.findByIdAndUpdate
+        (topicId, { ...req.body }, { new: true });
+        if (!topic) return res.status(404).send({ message: "Topic not found" });
+        return res.status(200).json(topic);
+    }
+    catch (error) {
+        return res.status(500
+        ).send(error);
+    }
+}
