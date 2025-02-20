@@ -4,7 +4,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,11 +22,12 @@ import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useSearchParams } from "next/navigation";
-import { useTokenStorage } from "@/store/store";
+// import { useTokenStorage } from "@/store/store";
+import axiosInstance from "@/lib/axiosInstance";
 
 function ProfilePage() {
     const [file, setFile] = useState<string>();
-    const accessToken = useTokenStorage((state) => state.accessToken);
+    // const accessToken = useTokenStorage((state) => state.accessToken);
     const searchParams = useSearchParams();
     const error = searchParams.get("error");
     const formSchema = z.object({
@@ -83,27 +84,27 @@ function ProfilePage() {
             formValues.gender
         ) {
             try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/users/updateUserProfile`,
-                    {
-                        method: "PATCH",
-                        headers: {
-                            authorization: `Bearer ${accessToken}`,
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(formValues),
-                    }
-                );
+                // const response = await fetch(
+                //     `${process.env.NEXT_PUBLIC_API_URL}/users/updateUserProfile`,
+                //     {
+                //         method: "PATCH",
+                //         headers: {
+                //             authorization: `Bearer ${accessToken}`,
+                //             "Content-Type": "application/json",
+                //         },
+                //         body: JSON.stringify(formValues),
+                //     }
+                // );
+                const response = await axiosInstance.patch("/users/updateUserProfile", formValues);
                 if (response.status === 200) {
                     toast.success("Update profile successfully");
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 3000);
+                    window.location.replace("/home")
                     return;
-                } else {
-                    toast.error("Update profile failed");
-                    return;
-                }
+                } 
+                // else {
+                //     toast.error("Update profile failed");
+                //     return;
+                // }
             } catch (error) {
                 toast.error(String(error));
             }
@@ -123,7 +124,6 @@ function ProfilePage() {
 
     return (
         <div>
-            <ToastContainer />
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}

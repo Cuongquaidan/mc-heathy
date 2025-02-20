@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AuthorizeUserRoute } from "@/middleware/auth";
 import React, { ReactNode } from "react";
 import ChatBot from "@/chatbot/Chat";
-import { ToastContainer } from "react-toastify";
 function PageLayout({ children }: { children: ReactNode }) {
     return (
         <AuthorizeUserRoute>
@@ -19,7 +18,6 @@ function PageLayout({ children }: { children: ReactNode }) {
                 {children}
                 <Footer></Footer>
                 <ChatBot></ChatBot>
-                <ToastContainer></ToastContainer>
             </ThemeProvider>
         </AuthorizeUserRoute>
     );
