@@ -10,8 +10,8 @@ function TopicsPage() {
                 Manage topics
             </h2>
             <Button>
-                <Link href={"/admin/topics/add-topic"}>Add topic</Link>
-            </Button></div>
+                  <Link href={"/admin/topics/add-topic"}>Add topic</Link>
+                     </Button></div>
             <TopicsListAdmin></TopicsListAdmin>
         </div>
     );
