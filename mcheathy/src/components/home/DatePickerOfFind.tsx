@@ -43,6 +43,7 @@ function DatePickerOfFind() {
             <div className="grid grid-cols-3 gap-10 p-10">
                 {doctors?.map((item, index) => (
                     <DoctorItem
+                        isAdmin={false}
                         item={item}
                         width="100px"
                         height="125px"
