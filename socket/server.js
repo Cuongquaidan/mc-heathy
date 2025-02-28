@@ -1,8 +1,10 @@
 import { Server } from "socket.io";
 
+const PORT = process.env.PORT || 8000;
 const io = new Server({
     /* options */
-    cors: "http://localhost:3000",
+    cors: {
+        origin:["https://mc-heathy.vercel.app/login","http://localhost:3000"]},
 });
 let onlineUsers = [];
 io.on("connection", (socket) => {
@@ -35,4 +37,4 @@ io.on("connection", (socket) => {
     });
 });
 
-io.listen(8000);
+io.listen(PORT);
