@@ -87,6 +87,7 @@ function OTPPage() {
             handleSendOTP();
             otpSent.current = true; // Đặt cờ là đã gửi
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [email]);
 
     if (!email)
