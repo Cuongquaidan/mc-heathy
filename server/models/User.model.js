@@ -9,7 +9,7 @@ const UserScheme = new Schema({
     gender: { type: Boolean, required: true },
     avatar: { type: String, required: true },
     dob: { type: Date, required: true },
-    role: { type: String, required: true },
+    role: { type: String, default: "user" },
 });
 
 const UserModel = mongoose.models.User || mongoose.model("User", UserScheme);

@@ -28,7 +28,7 @@ export async function register(req, res) {
     await connect();
     try {
         const { name, email, password, avatar, dob, phone, gender } = req.body;
-
+        
         const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "Email is already in use" });
