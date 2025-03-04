@@ -29,13 +29,13 @@ const ChatContext = createContext<{
     messages: Message[];
 }>({
     showChat: false,
-    setShowChat: () => {}, // No-op function for default value
+    setShowChat: () => { }, // No-op function for default value
     currentChats: [], // Default is an empty array
-    setCurrentChats: () => {}, // No-op function for default value
+    setCurrentChats: () => { }, // No-op function for default value
     currentChat: { _id: "", members: [] }, // Default is an empty array
-    setCurrentChat: () => {}, // No-op function for default value
+    setCurrentChat: () => { }, // No-op function for default value
     recipientId: "",
-    setRecipientId: () => {},
+    setRecipientId: () => { },
     onlineUsers: [],
     message: {
         _id: "",
@@ -45,13 +45,17 @@ const ChatContext = createContext<{
         createdAt: new Date(),
         updatedAt: new Date(),
     },
-    setMessage: () => {},
-    setMessages: () => {},
+    setMessage: () => { },
+    setMessages: () => { },
     messages: [],
 });
 
 // Provider component to wrap around consumers
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
+    const SERVER_URL =
+        window.location.hostname === "localhost"
+            ? "http://localhost:8000"  // Chạy local khi test
+            : "https://mc-heathy-socket.onrender.com"; // Chạy online khi deploy
     const [showChat, setShowChat] = useState(false);
     const [currentChats, setCurrentChats] = useState<Chat[]>([]);
     const [currentChat, setCurrentChat] = useState<Chat>({
@@ -104,7 +108,9 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, [chat]);
     useEffect(() => {
-        const newSocket = io("http://localhost:8000");
+        const newSocket = io(
+            SERVER_URL
+        );
         setSocket(newSocket);
 
         return () => {
