@@ -1,3 +1,4 @@
+
 import { Topic } from "@/lib/interface";
 import Image from "next/image";
 import React from "react";
@@ -8,7 +9,7 @@ function TopicItem({ item, ...props }: { item: Topic }) {
     return (
         <Link
             {...props}
-            className="flex flex-col w-full gap-4 p-5 border shadow-lg cursor-pointer rounded-xl"
+            className="flex flex-col w-[30%] gap-4 p-5 border shadow-lg cursor-pointer rounded-xl"
             href={`/topics/topic-details?topicId=${item._id}`}
         >
             <div className="flex justify-between">

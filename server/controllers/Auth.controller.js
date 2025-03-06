@@ -63,39 +63,31 @@ export async function login(req, res) {
     const { email, password } = req.body;
 
     try {
-        const existingUser = await UserModel.findOne({ email });
-        if (!existingUser)
+        const user = await UserModel.findOne({ email });
+        if (!user) {
             return res.status(404).send({ error: "Email not found" });
+        }
 
-        UserModel.findOne({ email })
-            .then((user) => {
-                bcrypt
-                    .compare(password, user.password)
-                    .then(() => {
-                        // create jwt token
-                        const accessToken = createAccessToken(user);
-                        const refreshToken = createRefreshToken(user);
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).send({ error: "Password does not match" });
+        }
 
-                        return res.status(200).send({
-                            message: "Login Successful...!",
-                            username: user.email,
-                            accessToken,
-                            refreshToken,
-                        });
-                    })
-                    .catch((error) => {
-                        return res
-                            .status(400)
-                            .send({ error: "Password does not Match" });
-                    });
-            })
-            .catch((error) => {
-                return res.status(404).send({ error: "Username not Found" });
-            });
+        // Tạo token nếu mật khẩu đúng
+        const accessToken = createAccessToken(user);
+        const refreshToken = createRefreshToken(user);
+
+        return res.status(200).send({
+            message: "Login Successful...!",
+            username: user.email,
+            accessToken,
+            refreshToken,
+        });
     } catch (error) {
-        return res.status(500).send({ error });
+        return res.status(500).send({ error: error.message });
     }
 }
+
 export function getAccessToken(req, res) {
     const { refreshToken } = req.body;
 

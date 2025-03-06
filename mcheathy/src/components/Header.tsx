@@ -18,6 +18,7 @@ import { useCurrentUserStore, useTokenStorage } from "@/store/store";
 import useFetchData from "@/hooks/useFetchData";
 import { User } from "@/lib/interface";
 import HeaderSkeleton from "./skeleton/HeaderSkeleton";
+import { motion } from "framer-motion";
 function Header() {
     const pathName = usePathname();
     const { setTheme } = useTheme();
@@ -36,14 +37,35 @@ function Header() {
 
     return (
         <Suspense fallback={<HeaderSkeleton />}>
-            <div className="max-w-[100%] p-10 flex justify-between items-center px-36">
+            <motion.div
+                initial={{
+                    opacity: 0,
+
+                }}
+                animate={{
+                    opacity: 1,
+
+
+                }}
+
+                className="max-w-[100%] p-10 flex justify-between items-center px-36">
                 <Link
                     href={"/home"}
                     className="p-5 text-2xl italic font-bold tracking-widest rounded-lg text-textBlue bg-lightBlue dark:text-darkTextPrimary dark:bg-darkBackground dark:border-slate-500 dark:border"
                 >
                     MCHeathy
                 </Link>
-                <div className="flex gap-10 text-xl font-semibold">
+                <motion.div initial={{
+                    opacity: 0,
+
+                }} animate={{
+                    opacity: 1,
+
+                }}
+                    transition={{
+                        delay: 0.1,
+                    }}
+                    className="flex gap-10 text-xl font-semibold">
                     <Link
                         href={"/home"}
                         className={
@@ -94,7 +116,7 @@ function Header() {
                     >
                         TOPICS
                     </Link>
-                </div>
+                </motion.div>
                 <div className="flex items-center gap-4">
                     {user ? (
                         <DropdownMenu>
@@ -172,7 +194,7 @@ function Header() {
                         />
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </Suspense>
     );
 }

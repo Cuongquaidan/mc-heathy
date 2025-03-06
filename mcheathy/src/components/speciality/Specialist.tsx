@@ -7,7 +7,7 @@ import DoctorListCustom from "../doctor/DoctorListCustom";
 import { useTokenStorage } from "@/store/store";
 import { useRouter } from "next/navigation";
 import SpecialistSkeleton from "../skeleton/SpecialistSkeleton";
-
+import { motion } from "framer-motion";
 function Specialist() {
     const router = useRouter();
     const accessToken = useTokenStorage((state) => state.accessToken);
@@ -18,8 +18,7 @@ function Specialist() {
         accessToken || " "
     );
     const { data: doctors, error } = useFetchData<Doctor[]>(
-        `${
-            process.env.NEXT_PUBLIC_API_URL
+        `${process.env.NEXT_PUBLIC_API_URL
         }/doctors/getDoctorsBySpeciality?speciality=${encodeURIComponent(
             speciality
         )}`,
@@ -39,11 +38,10 @@ function Specialist() {
                         <div key={index}>
                             <Button
                                 variant={"outline"}
-                                className={`w-full hover:bg-blue-300 hover:border-none border-primaryGray h-12 text-md ${
-                                    item.name == speciality
-                                        ? "bg-blue-300 border-none dark:bg-gray-700"
-                                        : ""
-                                }`}
+                                className={`w-full hover:bg-blue-300 hover:border-none border-primaryGray h-12 text-md ${item.name == speciality
+                                    ? "bg-blue-300 border-none dark:bg-gray-700"
+                                    : ""
+                                    }`}
                                 onClick={() => {
                                     if (item.name != speciality) {
                                         setSpeciality(item.name);
@@ -51,8 +49,27 @@ function Specialist() {
                                         setSpeciality("");
                                     }
                                 }}
+
                             >
-                                {item.name}
+                                <motion.div
+
+                                    initial={{
+                                        opacity: 0,
+                                        scale: 0.5,
+                                        y: -100,
+                                    }}
+
+                                    animate={{
+                                        opacity: 1,
+                                        scale: 1,
+                                        y: 0,
+
+                                    }}
+                                    transition={{
+                                        delay: 0.1 * index,
+                                    }}
+
+                                >{item.name}</motion.div>
                             </Button>
                         </div>
                     ))}

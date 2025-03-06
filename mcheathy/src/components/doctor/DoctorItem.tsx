@@ -7,6 +7,8 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useTokenStorage } from "@/store/store";
+import { motion } from "framer-motion";
+import variants from "@/helpers/variantsMotion";
 function DoctorItem({
     item,
     width,
@@ -23,11 +25,14 @@ function DoctorItem({
 }) {
     const accessToken = useTokenStorage((state) => state.accessToken);
     return (
-        <div
+        <motion.div
             {...props}
-            className={` p-8 border rounded-xl border-textBlue bg-lightBlue dark:border-primaryGray dark:bg-darkBackground items-center ${
-                isFlex ? " flex flex-row gap-8 items-center" : ""
-            }`}
+            className={` p-8 border rounded-xl border-textBlue bg-lightBlue dark:border-primaryGray dark:bg-darkBackground items-center ${isFlex ? " flex flex-row gap-8 items-center" : ""
+                }`}
+
+            variants={variants}
+            initial="initial"
+            animate="animate"
         >
             <Image
                 src={item.avatar}
@@ -109,7 +114,7 @@ function DoctorItem({
                     </Link>
                 </Button>
             )}
-        </div>
+        </motion.div>
     );
 }
 

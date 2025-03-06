@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useUnresgisterStore } from "@/store/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { motion } from "framer-motion";
 function OTPPage() {
     const router = useRouter();
     const email = useUnresgisterStore((state) => state.email);
@@ -16,7 +16,10 @@ function OTPPage() {
     const phone = useUnresgisterStore((state) => state.phone);
     const avatar = useUnresgisterStore((state) => state.avatar);
     const [otpInput, setOtpInput] = useState<string>("");
-
+    const variants = {
+        initial: { opacity: 0, scale: 0.5 },
+        animate: { opacity: 1, cale: 1 },
+    };
     // Tạo ref để lưu trạng thái gửi OTP
     const otpSent = useRef(false);
 
@@ -87,7 +90,7 @@ function OTPPage() {
             handleSendOTP();
             otpSent.current = true; // Đặt cờ là đã gửi
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [email]);
 
     if (!email)
@@ -99,7 +102,7 @@ function OTPPage() {
         );
 
     return (
-        <div className="w-[1000px] max-w-[100%] mx-auto flex-col flex gap-5 py-16 items-center min-h-screen">
+        <motion.div variants={variants} initial="initial" animate="animate" className="w-[1000px] max-w-[100%] mx-auto flex-col flex gap-5 py-16 items-center min-h-screen">
             <p className="mb-10 text-3xl font-bold">Verify OTP</p>
             <Input
                 placeholder="Enter your OTP"
@@ -129,7 +132,7 @@ function OTPPage() {
                     Cancel
                 </Button>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

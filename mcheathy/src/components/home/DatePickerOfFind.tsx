@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import variants from "@/helpers/variantsMotion";
 import { Calendar } from "../ui/calendar";
 import {
     Popover,
@@ -12,6 +13,8 @@ import { Doctor } from "@/lib/interface";
 import useFetchData from "@/hooks/useFetchData";
 import { useTokenStorage } from "@/store/store";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+
 function DatePickerOfFind() {
     const [date, setDate] = useState<Date | undefined>(new Date());
     const accessToken = useTokenStorage((state) => state.accessToken);
@@ -26,7 +29,9 @@ function DatePickerOfFind() {
         router.push("/login");
     }
     return (
-        <div>
+        <motion.div variants={variants} initial="initial"
+            whileInView={{ opacity: 1, scale: 1 }}
+        >
             <Popover>
                 <PopoverTrigger className="text-xl italic font-bold">
                     Select date: {date?.toLocaleDateString("en-GB")}
@@ -52,7 +57,7 @@ function DatePickerOfFind() {
                     ></DoctorItem>
                 ))}
             </div>
-        </div>
+        </motion.div>
     );
 }
 

@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import Banner from "@/components/Banner";
 import FindBySpeciality from "@/components/home/FindBySpeciality";
 import FindByDate from "@/components/home/FindByDate";
+
+
 export const metadata: Metadata = {
     title: "Home",
     description:
