@@ -30,10 +30,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AxiosInterceptor>
-                 <ToastContainer></ToastContainer>
-                 {children}
+          <ToastContainer></ToastContainer>
+          {children}
         </AxiosInterceptor>
-        
+
       </body>
     </html>
   );

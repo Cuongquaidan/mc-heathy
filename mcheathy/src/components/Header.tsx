@@ -19,7 +19,17 @@ import useFetchData from "@/hooks/useFetchData";
 import { User } from "@/lib/interface";
 import HeaderSkeleton from "./skeleton/HeaderSkeleton";
 import { motion } from "framer-motion";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+
 function Header() {
+
+
     const pathName = usePathname();
     const { setTheme } = useTheme();
 
@@ -27,6 +37,7 @@ function Header() {
     const accessToken = useTokenStorage((state) => state.accessToken);
     const logout = useTokenStorage((state) => state.logout);
     const router = useRouter();
+
     const { data: user, error } = useFetchData<User>(
         `${process.env.NEXT_PUBLIC_API_URL}/users/getUserByID?userID=${currentUserID}`,
         "Fetch data failed",
@@ -193,6 +204,16 @@ function Header() {
                             }}
                         />
                     </div>
+                    <Select>
+                        <SelectTrigger className="w-[100px]">
+                            <SelectValue placeholder="Langue" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="vn">vn</SelectItem>
+                            <SelectItem value="en">en</SelectItem>
+                        </SelectContent>
+                    </Select>
+
                 </div>
             </motion.div>
         </Suspense>
