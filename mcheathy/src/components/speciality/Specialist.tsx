@@ -17,6 +17,7 @@ function Specialist() {
         "Fetch data failed",
         accessToken || " "
     );
+
     const { data: doctors, error } = useFetchData<Doctor[]>(
         `${process.env.NEXT_PUBLIC_API_URL
         }/doctors/getDoctorsBySpeciality?speciality=${encodeURIComponent(
@@ -35,10 +36,13 @@ function Specialist() {
             <div className="grid grid-cols-[1fr,4fr] gap-20 mt-10">
                 <div className="flex flex-col gap-5">
                     {specialist?.map((item, index) => (
-                        <div key={index}>
+                        <motion.div whileHover={{
+
+                            boxShadow: "0px 0px 10px 10px rgba(4, 119, 161, 0.2)",
+                        }} key={index}>
                             <Button
                                 variant={"outline"}
-                                className={`w-full hover:bg-blue-300 hover:border-none border-primaryGray h-12 text-md ${item.name == speciality
+                                className={`w-full  border-primaryGray h-12 text-md ${item.name == speciality
                                     ? "bg-blue-300 border-none dark:bg-gray-700"
                                     : ""
                                     }`}
@@ -71,7 +75,7 @@ function Specialist() {
 
                                 >{item.name}</motion.div>
                             </Button>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
                 <div>

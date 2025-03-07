@@ -60,12 +60,18 @@ function Header() {
                 }}
 
                 className="max-w-[100%] p-10 flex justify-between items-center px-36">
-                <Link
-                    href={"/home"}
-                    className="p-5 text-2xl italic font-bold tracking-widest rounded-lg text-textBlue bg-lightBlue dark:text-darkTextPrimary dark:bg-darkBackground dark:border-slate-500 dark:border"
+                <motion.div
+                    whileHover={{
+                        boxShadow: "0px 0px 10px 10px rgba(4, 119, 161, 0.2)",
+                    }}
                 >
-                    MCHeathy
-                </Link>
+                    <Link
+                        href={"/home"}
+                        className="p-2 text-2xl italic font-bold tracking-widest rounded-lg text-textBlue bg-lightBlue dark:text-darkTextPrimary dark:bg-darkBackground dark:border-slate-500 dark:border"
+                    >
+                        MCHeathy
+                    </Link>
+                </motion.div>
                 <motion.div initial={{
                     opacity: 0,
 

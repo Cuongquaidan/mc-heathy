@@ -27,12 +27,16 @@ function DoctorItem({
     return (
         <motion.div
             {...props}
-            className={` p-8 border rounded-xl border-textBlue bg-lightBlue dark:border-primaryGray dark:bg-darkBackground items-center ${isFlex ? " flex flex-row gap-8 items-center" : ""
+            className={`cursor-pointer p-8 border rounded-xl border-textBlue bg-lightBlue dark:border-primaryGray dark:bg-darkBackground items-center ${isFlex ? " flex flex-row gap-8 items-center" : ""
                 }`}
 
             variants={variants}
             initial="initial"
             animate="animate"
+            whileHover={{
+                y: -10,
+                boxShadow: "0px 0px 10px 10px rgba(4, 119, 161, 0.2)",
+            }}
         >
             <Image
                 src={item.avatar}
@@ -108,7 +112,7 @@ function DoctorItem({
                     </Button>
                 </div>
             ) : (
-                <Button className=" bg-textBlue">
+                <Button className=" hover:!bg-textBlue hover:!text-white" >
                     <Link href={`/book-appointment?doctorId=${item._id}`}>
                         Book
                     </Link>

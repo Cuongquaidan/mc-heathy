@@ -47,9 +47,7 @@ function Footer() {
                                     opacity: 1,
                                     y: 0,
                                 }}
-                                transition={{
-                                    delay: index * 0.1,
-                                }}
+
                                 key={index}
                                 className="text-2xl text-textBlue dark:text-darkTextPrimary"
                             >
@@ -68,9 +66,7 @@ function Footer() {
                                     opacity: 1,
                                     y: 0,
                                 }}
-                                transition={{
-                                    delay: index * 0.05 + text1.length * 0.1,
-                                }}
+
                                 key={index}
                                 className="text-md text-textBlue dark:text-darkTextPrimary"
                             >
@@ -89,9 +85,7 @@ function Footer() {
                                     opacity: 1,
                                     y: 0,
                                 }}
-                                transition={{
-                                    delay: index * 0.05 + text1.length * 0.1 + text2.length * 0.05,
-                                }}
+
                                 key={index}
                                 className="text-md text-textBlue dark:text-darkTextPrimary"
                             >
@@ -109,9 +103,7 @@ function Footer() {
                                     opacity: 1,
                                     y: 0,
                                 }}
-                                transition={{
-                                    delay: index * 0.05 + text1.length * 0.1 + text2.length * 0.05 + text3.length * 0.05,
-                                }}
+
                                 key={index}
                                 className="text-md text-textBlue dark:text-darkTextPrimary"
                             >
