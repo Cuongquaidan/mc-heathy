@@ -135,7 +135,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         if (socket === null) return;
         if (!recipientId) return;
         if (!message) return;
-
+        console.log("send message", message);
         socket.emit("sendMessage", { ...message, recipientId });
 
         return () => {
