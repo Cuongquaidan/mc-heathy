@@ -1,7 +1,7 @@
 "use client";
 import { useChatContext } from "@/context/ChatContext";
 import useFetchData from "@/hooks/useFetchData";
-import { Chat, Doctor, Message, User } from "@/lib/interface";
+import { Doctor, User } from "@/lib/interface";
 import { useCurrentUserStore, useTokenStorage } from "@/store/store";
 import React, { useEffect, useRef } from "react";
 import { FormControl, FormField, FormItem, Form } from "../ui/form";
@@ -83,7 +83,7 @@ function ChatBox({ type }: { type: string }) {
     return (
         <div className="flex flex-col flex-1 w-full p-8 border-t-2 border-gray-500">
             <div className="flex-1">
-                {messages && messages.length > 0 && (
+                {messages && messages.length > 0 && recipientId && (
                     <div>
                         <div className="text-center">
                             Chat with {recipienter?.name}
