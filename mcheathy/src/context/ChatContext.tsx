@@ -136,7 +136,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         socket.emit("sendMessage", { ...message, recipientId });
 
         return () => {
-            socket.off("getOnlineUsers");
+            socket.off("sendMessage");
         };
     }, [message, recipientId]);
     // receive message

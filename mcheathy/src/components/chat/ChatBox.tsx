@@ -41,9 +41,9 @@ function ChatBox({ type }: { type: string }) {
     });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(currentChat);
+        console.log("submit", values);
         if (!currentChat?._id || !recipientId || values.text.trim() === "") return;
-        console.log(values);
+
         try {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/messages`,
