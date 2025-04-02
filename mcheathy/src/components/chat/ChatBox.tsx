@@ -94,32 +94,37 @@ function ChatBox({ type }: { type: string }) {
                         </div>
                         <ScrollArea className="p-4 h-[250px]">
                             <div className="flex flex-col gap-4">
-                                {messages.map((item, index) => (
-                                    <div
-                                        ref={
-                                            index === messages.length - 1
-                                                ? lastMessageRef
-                                                : null
-                                        }
-                                        key={index}
-                                        style={{
-                                            backgroundColor:
-                                                item.senderId === currentUserID
-                                                    ? "#00bcd4"
-                                                    : "#3f3f3f",
-                                            color: "white",
-                                            padding: "10px",
-                                            borderRadius: "10px",
-                                            maxWidth: "60%",
-                                            marginLeft:
-                                                item.senderId === currentUserID
-                                                    ? "auto"
-                                                    : "0",
-                                        }}
-                                    >
-                                        {item.text}
-                                    </div>
-                                ))}
+                                {messages.map((item, index) => {
+                                    if (!item.text) return null; // Bỏ qua nếu không có text
+                                    return (
+                                        <div
+                                            ref={
+                                                index === messages.length - 1
+                                                    ? lastMessageRef
+                                                    : null
+                                            }
+                                            key={index}
+                                            style={{
+                                                backgroundColor:
+                                                    item.senderId === currentUserID
+                                                        ? "#00bcd4"
+                                                        : "#3f3f3f",
+                                                color: "white",
+                                                padding: "10px",
+                                                borderRadius: "10px",
+                                                maxWidth: "60%",
+                                                marginLeft:
+                                                    item.senderId === currentUserID
+                                                        ? "auto"
+                                                        : "0",
+                                            }}
+                                        >
+                                            {item.text}
+                                        </div>
+                                    )
+                                }
+
+                                )}
                             </div>
                         </ScrollArea>
                     </div>
